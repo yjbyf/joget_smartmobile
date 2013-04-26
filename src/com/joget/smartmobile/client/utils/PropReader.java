@@ -1,0 +1,64 @@
+package com.joget.smartmobile.client.utils;
+
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.resources.client.ResourceCallback;
+import com.google.gwt.resources.client.ResourceException;
+import com.google.gwt.resources.client.TextResource;
+
+
+public class PropReader {
+	private static PropReader instance = null;
+	 
+	private String jogetBaseUrl = "";
+	private String jogetServerIdentifination = "";
+	
+	public String getJogetBaseUrl() {
+		return jogetBaseUrl;
+	}
+
+	public void setJogetBaseUrl(String jogetBaseUrl) {
+		this.jogetBaseUrl = jogetBaseUrl;
+	}
+
+	public String getJogetServerIdentifination() {
+		return jogetServerIdentifination;
+	}
+
+	public void setJogetServerIdentifination(String jogetServerIdentifination) {
+		this.jogetServerIdentifination = jogetServerIdentifination;
+	}
+
+	public static void readAsync(final PropReaderClient client){
+		try {
+			if(instance!=null){
+				client.onSuccess(instance);
+				return;
+			}else{
+				instance = new PropReader(); 
+			}
+			Resources.INSTANCE.asynchronous().getText(new ResourceCallback<TextResource>() {
+				public void onError(ResourceException e) {
+					client.onUnavailable(e);
+				}
+
+				public void onSuccess(TextResource r) {
+					JSONObject jsonObject = JSONParser.parseLenient(r.getText()).isObject();
+					instance.setJogetBaseUrl(StringUtils.getRidOfQuotes(jsonObject.get(Constants.PROP_JOGET_BASE_URL)
+							+ ""));
+					instance.setJogetServerIdentifination(StringUtils.getRidOfQuotes(jsonObject
+							.get(Constants.PROP_JOGET_SERVER_IDENTIFINATION) + ""));
+					client.onSuccess(instance);
+					// SC.say(r.getText());
+
+				}
+			});
+		} catch (ResourceException e1) {
+			// TODO Auto-generated catch block
+			client.onUnavailable(e1);
+			//e1.printStackTrace();
+		}
+	}
+
+	
+}

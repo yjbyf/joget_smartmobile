@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="JogetWorkFlow">
+	<inherits name='com.google.gwt.json.JSON' />
+	<inherits name='com.google.gwt.jsonp.Jsonp' />
+
+	<!-- For the JSON related code -->
+	<inherits name="name.pehl.totoe.json.JSON" />
+
+	<!-- For the XML related code -->
+	<inherits name="name.pehl.totoe.xml.XML" />
+
+	<inherits name="com.smartgwt.mobile.SmartGwtMobile" />
+	<entry-point class="com.joget.smartmobile.client.JogetWorkFlow" />
+</module>
