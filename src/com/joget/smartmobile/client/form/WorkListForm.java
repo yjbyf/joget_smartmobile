@@ -84,7 +84,7 @@ public class WorkListForm extends ScrollablePanel {
 				// SC.say("ERROR","Plz pick an Operation");
 				// return;
 				// }
-				Dialog dialog = new Dialog("Do you like " +op+ "?");
+				Dialog dialog = new Dialog("Do you like continue?");
 				dialog.setButtons(Dialog.YES, Dialog.NO);
 				dialog.addButtonClickHandler(new ButtonClickHandler() {					
 					@Override
