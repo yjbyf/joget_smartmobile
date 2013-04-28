@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import name.pehl.totoe.json.client.JsonPath;
 
@@ -15,6 +13,8 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.joget.smartmobile.client.utils.Constants;
 import com.joget.smartmobile.client.utils.StringUtils;
 
@@ -42,22 +42,31 @@ public class FormItemsJso extends JavaScriptObject {
 		JSONValue xpathResult = JsonPath.select(jsonValue.isObject(), "$.meta[0].elements");
 		JSONArray xpathResultArray = xpathResult.isArray();
 		if (xpathResultArray != null) {
-			for (int i = 0; i < xpathResultArray.size(); i++) {
+			for (int i = 0; i < xpathResultArray.size(); i++) {//section块
 				JSONValue xpathResultElement = xpathResultArray.get(i);
 				JSONObject elementJSONObject = xpathResultElement.isObject();
 				JSONValue className = elementJSONObject.get(Constants.ELEMENT_CLASSNAME);
 				if (Constants.isProcessedType(className)) {
 					// System.err.println(elementJSONObject.toString());
-					//判断是否可见
+					//判断section是否可见
 					FormItemJso itemJso = (FormItemJso) elementJSONObject.getJavaScriptObject();
 					if(itemJso!=null&&itemJso.getVisibilityControl()!=null&&itemJso.getVisibilityControl().length()>0){
-						String visibilityDefinedValue = itemJso.getVisibilityValue();
+						String visibilityDefinedValue = itemJso.getVisibilityValue();//正则表达式
+						//data中具体变量的值取得--变量名为itemJso.getVisibilityControl()
 						JSONValue visibilityValue = JsonPath.select(jsonValue.isObject(), "$.data.."+itemJso.getVisibilityControl());
 						JSONArray visibilityArray =  visibilityValue.isArray();
+						//变量值表现为["1"],首先去除"[]"--数组第一个元素
 						if(visibilityArray!=null&&visibilityArray.size()>0){
 							String value = StringUtils.getRidOfQuotes(visibilityArray.get(0).toString());
-							System.err.println(value);
-							//TODO
+							//System.err.println(value);
+							// Compile and use regular expression
+							String patternStr = visibilityDefinedValue;
+							RegExp regExp = RegExp.compile(patternStr);
+							MatchResult matcher = regExp.exec(value);
+							boolean matchFound = (matcher != null); // equivalent to regExp.test(inputStr);
+							if (matchFound) {
+								continue;
+							}
 							//Pattern pattern = Pattern.compile(visibilityDefinedValue);
 							//Matcher matcher = pattern.matcher(value);							
 							//if(matcher.matches()){
@@ -72,12 +81,12 @@ public class FormItemsJso extends JavaScriptObject {
 				JSONValue xpathrowResult = JsonPath.select(elementJSONObject, "$.elements");
 				JSONArray xpathRowArray = xpathrowResult.isArray();
 				if (xpathRowArray != null) {
-					for (int row = 0; row < xpathRowArray.size(); row++) {
+					for (int row = 0; row < xpathRowArray.size(); row++) {//column块
 						JSONObject xpathResultRow = xpathRowArray.get(row).isObject();
 						xpathResult = JsonPath.select(xpathResultRow, "$.elements");
 						JSONArray xpathLeafArray = xpathResult.isArray();
 						if (xpathLeafArray != null) {
-							for (int j = 0; j < xpathLeafArray.size(); j++) {
+							for (int j = 0; j < xpathLeafArray.size(); j++) {//field块
 								JSONObject leafJSONObject = xpathLeafArray.get(j).isObject();
 								if (Constants.isProcessedType(leafJSONObject.get(Constants.ELEMENT_CLASSNAME))) {
 									// System.err.println(elementJSONObject.toString());
