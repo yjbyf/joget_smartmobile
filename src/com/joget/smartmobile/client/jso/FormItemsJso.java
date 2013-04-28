@@ -48,17 +48,25 @@ public class FormItemsJso extends JavaScriptObject {
 					items.add(elementJSONObject);
 				}
 				//针对每个section,加入其下的各类输入元素
-				xpathResult = JsonPath.select(elementJSONObject, "$.elements[0].elements");
-				JSONArray xpathLeafArray = xpathResult.isArray();
-				if (xpathLeafArray != null) {
-					for (int j = 0; j < xpathLeafArray.size(); j++) {
-						JSONObject leafJSONObject = xpathLeafArray.get(j).isObject();
-						if (Constants.isProcessedType(leafJSONObject.get(Constants.ELEMENT_CLASSNAME))) {
-							// System.err.println(elementJSONObject.toString());
-							items.add(leafJSONObject);
-						}
+				JSONValue xpathrowResult = JsonPath.select(elementJSONObject, "$.elements");
+				JSONArray xpathRowArray = xpathrowResult.isArray();
+				if (xpathRowArray != null) {
+					for (int row = 0; row < xpathRowArray.size(); row++) {
+						JSONObject xpathResultRow = xpathRowArray.get(row).isObject();
+						xpathResult = JsonPath.select(xpathResultRow, "$.elements");
+						JSONArray xpathLeafArray = xpathResult.isArray();
+						if (xpathLeafArray != null) {
+							for (int j = 0; j < xpathLeafArray.size(); j++) {
+								JSONObject leafJSONObject = xpathLeafArray.get(j).isObject();
+								if (Constants.isProcessedType(leafJSONObject.get(Constants.ELEMENT_CLASSNAME))) {
+									// System.err.println(elementJSONObject.toString());
+									items.add(leafJSONObject);
+								}
+							}
+						}	
 					}
 				}	
+				
 			}
 		}
 		
