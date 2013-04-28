@@ -49,6 +49,7 @@ public class FormItemsFactory {
 
 		// 处理只读，如果是工作流变量(变量名放在id中)则可写
 		for (FormItem item : results) {
+			System.err.println(item.getName());
 			if (item.getID() != null && item.getID().length() > 0) {
 				item.setDisabled(false);
 			} else {
@@ -69,7 +70,7 @@ public class FormItemsFactory {
 		String workflowVariable = formItemJso.getWorkflowVariable();
 		String label = formItemJso.getLabel();
 		//String value = formItemJso.getValue();
-		TextItem textItem = new TextItem(label, label, Constants.INPUT_HINT);
+		TextItem textItem = new TextItem(label+(++id), label, Constants.INPUT_HINT);
 		//textItem.setValue(value);
 		textItem.setID(workflowVariable);
 		textItem.setValue(valuesMap.get(formItemJso.getId()));
@@ -82,7 +83,7 @@ public class FormItemsFactory {
 		//String workflowVariable = formItemJso.getWorkflowVariable();
 		String label = formItemJso.getLabel();
 		//String value = formItemJso.getValue();
-		StaticTextItem textItem = new StaticTextItem(""+(id++));
+		StaticTextItem textItem = new StaticTextItem(""+(++id));
 		textItem.setValue(label);
 		//textItem.setID(workflowVariable);
 		//textItem.setValue(valuesMap.get(formItemJso.getId()));
@@ -102,7 +103,7 @@ public class FormItemsFactory {
 		String workflowVariable = formItemJso.getWorkflowVariable();
 		String label = formItemJso.getLabel();
 		//String value = formItemJso.getValue();
-		SelectItem selectItem = new SelectItem(label, label, Constants.INPUT_HINT);
+		SelectItem selectItem = new SelectItem(label+(++id), label, Constants.INPUT_HINT);
 		// System.err.println(formItemJso.getOptionsLength());
 		// 设置下拉框的所有值
 		LinkedHashMap<String, String> values = new LinkedHashMap<String, String>();
@@ -127,7 +128,7 @@ public class FormItemsFactory {
 		String workflowVariable = formItemJso.getWorkflowVariable();
 		String label = formItemJso.getLabel();
 		String value = formItemJso.getValue();
-		DateItem dueItem = new DateItem(label, label, Constants.INPUT_HINT);
+		DateItem dueItem = new DateItem(label+(++id), label, Constants.INPUT_HINT);
 		dueItem.setAllowEmptyValue(true);
 		dueItem.setSelectorFormat(DateItemSelectorFormat.DAY_MONTH_YEAR);
 		// LogicalDate startDate = new LogicalDate();
