@@ -54,6 +54,7 @@ public class FormItemsFactory {
 				item.setDisabled(false);
 			} else {
 				item.setDisabled(true);
+				item.setHint("");
 			}
 		}
 		return results;
