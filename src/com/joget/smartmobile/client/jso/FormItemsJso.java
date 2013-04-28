@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import name.pehl.totoe.json.client.JsonPath;
 
@@ -14,6 +16,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.joget.smartmobile.client.utils.Constants;
+import com.joget.smartmobile.client.utils.StringUtils;
 
 /*
  {"className":"org.joget.apps.form.model.Form", "properties":{"id":"test_1", "loadBinder":{"className":"org.joget.apps.form.lib.WorkflowFormBinder", "properties":{}}, "tableName":"test_1", "name":"test_1", "storeBinder":{"className":"org.joget.apps.form.lib.WorkflowFormBinder", "properties":{}}, "url":"", "elementUniqueKey":"805"}, "elements":[{"className":"org.joget.apps.form.model.Section", "properties":{"id":"section1", "label":"分区", "elementUniqueKey":"806"}, "elements":[{"className":"org.joget.apps.form.model.Column", "properties":{"width":"100%", "elementUniqueKey":"814"}, "elements":[{"className":"org.joget.apps.form.lib.TextField", "properties":{"id":"field1", "workflowVariable":"", "maxlength":"", "validator":{"className":"", "properties":{}}, "value":"", "label":"姓名", "readonly":"", "size":"", "elementUniqueKey":"818"}, "elements":[]},{"className":"org.joget.apps.form.lib.TextField", "properties":{"id":"field2", "workflowVariable":"", "maxlength":"", "validator":{"className":"", "properties":{}}, "value":"", "label":"出生日期", "readonly":"", "size":"", "elementUniqueKey":"819"}, "elements":[]},{"className":"org.joget.apps.form.lib.SelectBox", "properties":{"readonlyLabel":"", "validator":{"className":"", "properties":{}}, "controlField":"", "label":"SelectBox", "size":"", "id":"field3", "workflowVariable":"status", "optionsBinder":{"className":"", "properties":{}}, "value":"", "readonly":"", "multiple":"", "options":[{"grouping":"", "value":"Approved", "label":"Approve"},{"grouping":"", "value":"Reject", "label":"Reject"}], "elementUniqueKey":"820"}, "elements":[]}]}]},{"className":"org.joget.apps.form.model.Section", "properties":{"id":"section-actions"}, "elements":[{"className":"org.joget.apps.form.model.Column", "properties":{"horizontal":"true"}, "elements":[{"className":"org.joget.apps.form.lib.SaveAsDraftButton", "properties":{"id":"saveAsDraft", "label":"保存为草稿"}, "elements":[]},{"className":"org.joget.apps.workflow.lib.AssignmentCompleteButton", "properties":{"id":"assignmentComplete", "label":"提交"}, "elements":[]}]}]}]}
@@ -45,6 +48,24 @@ public class FormItemsJso extends JavaScriptObject {
 				JSONValue className = elementJSONObject.get(Constants.ELEMENT_CLASSNAME);
 				if (Constants.isProcessedType(className)) {
 					// System.err.println(elementJSONObject.toString());
+					//判断是否可见
+					FormItemJso itemJso = (FormItemJso) elementJSONObject.getJavaScriptObject();
+					if(itemJso!=null&&itemJso.getVisibilityControl()!=null&&itemJso.getVisibilityControl().length()>0){
+						String visibilityDefinedValue = itemJso.getVisibilityValue();
+						JSONValue visibilityValue = JsonPath.select(jsonValue.isObject(), "$.data.."+itemJso.getVisibilityControl());
+						JSONArray visibilityArray =  visibilityValue.isArray();
+						if(visibilityArray!=null&&visibilityArray.size()>0){
+							String value = StringUtils.getRidOfQuotes(visibilityArray.get(0).toString());
+							System.err.println(value);
+							//TODO
+							//Pattern pattern = Pattern.compile(visibilityDefinedValue);
+							//Matcher matcher = pattern.matcher(value);							
+							//if(matcher.matches()){
+								//continue;
+							//}
+						}
+						
+					}
 					items.add(elementJSONObject);
 				}
 				//针对每个section,加入其下的各类输入元素

@@ -51,4 +51,17 @@ public class FormItemJso extends JavaScriptObject {
 	/*-{
 		return this.properties.options[index].value;
 	}-*/;
+	
+	public final native String getVisibilityControl()
+	/*-{
+		//debugger;
+		return this.properties.visibilityControl;
+	}-*/;
+	
+	public final native String getVisibilityValue()
+	/*-{
+		//debugger;
+		return this.properties.visibilityValue;
+	}-*/;
+		
 }

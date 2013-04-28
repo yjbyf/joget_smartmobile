@@ -68,6 +68,7 @@ public class Constants {
 	public final static String TEXT_FIELD_TYPE = "\"org.joget.apps.form.lib.TextField\"";
 	public final static String SELECT_BOX_TYPE = "\"org.joget.apps.form.lib.SelectBox\"";
 	public final static String DATE_TYPE = "\"org.joget.apps.form.lib.DatePicker\"";
+	public final static String TEXT_AREA_TYPE = "\"org.joget.apps.form.lib.TextArea\"";
 	public final static String[] PROCESS_TYPES = { SECTION_TYPE, TEXT_FIELD_TYPE, SELECT_BOX_TYPE, DATE_TYPE };
 
 	public final static boolean isProcessedType(JSONValue type) {
@@ -80,7 +81,7 @@ public class Constants {
 	public final static boolean isProcessedType(String type) {
 		if (type != null
 				&& (type.equals(SECTION_TYPE) || type.equals(TEXT_FIELD_TYPE) || type.equals(SELECT_BOX_TYPE) || type
-						.equals(DATE_TYPE))) {
+						.equals(DATE_TYPE))||type.equals(TEXT_AREA_TYPE)) {
 			return true;
 		}
 		return false;

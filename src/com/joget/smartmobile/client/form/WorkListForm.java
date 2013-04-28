@@ -149,7 +149,7 @@ public class WorkListForm extends ScrollablePanel {
 			public void onSuccess(JavaScriptObject result) {
 				FormItemsJso formItemJso = (FormItemsJso) result;
 				//得到控件定义
-				final FormItem[] formItems = FormItemsFactory.getItems(formItemJso.getItems(),formItemJso.getValueMap());
+				final Canvas[] formItems = FormItemsFactory.getItems(formItemJso.getItems(),formItemJso.getValueMap());
 				dynamicForm.setFields(formItems);
 				//generateItems(FormItemsFactory.getItems(formItemJso.getItems()));
 				//页面form的items的value				
