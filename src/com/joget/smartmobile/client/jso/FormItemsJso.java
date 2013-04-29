@@ -50,6 +50,7 @@ public class FormItemsJso extends JavaScriptObject {
 					// System.err.println(elementJSONObject.toString());
 					// 判断section是否可见
 					FormItemJso itemJso = (FormItemJso) elementJSONObject.getJavaScriptObject();
+					//定义了变量visibilityControl则判断是否要显示，无定义则加入待显示数组
 					if (itemJso != null && itemJso.getVisibilityControl() != null
 							&& itemJso.getVisibilityControl().length() > 0) {
 						String visibilityDefinedValue = itemJso.getVisibilityValue();// 正则表达式
@@ -69,9 +70,12 @@ public class FormItemsJso extends JavaScriptObject {
 																	// to
 																	// regExp.test(inputStr);
 							if (!matchFound) {//满足则加入待显示数组;不满足则下个section
-								continue;
+								continue;//不满足则下个section
 							}
 
+						}else{
+							//找不到改变量的值则也不加入待显示数组
+							continue;
 						}
 					}
 					items.add(elementJSONObject);// 加入section块
