@@ -42,88 +42,89 @@ public class FormItemsJso extends JavaScriptObject {
 		JSONValue xpathResult = JsonPath.select(jsonValue.isObject(), "$.meta[0].elements");
 		JSONArray xpathResultArray = xpathResult.isArray();
 		if (xpathResultArray != null) {
-			for (int i = 0; i < xpathResultArray.size(); i++) {//section块
+			for (int i = 0; i < xpathResultArray.size(); i++) {// section块
 				JSONValue xpathResultElement = xpathResultArray.get(i);
 				JSONObject elementJSONObject = xpathResultElement.isObject();
 				JSONValue className = elementJSONObject.get(Constants.ELEMENT_CLASSNAME);
 				if (Constants.isProcessedType(className)) {
 					// System.err.println(elementJSONObject.toString());
-					//判断section是否可见
+					// 判断section是否可见
 					FormItemJso itemJso = (FormItemJso) elementJSONObject.getJavaScriptObject();
-					if(itemJso!=null&&itemJso.getVisibilityControl()!=null&&itemJso.getVisibilityControl().length()>0){
-						String visibilityDefinedValue = itemJso.getVisibilityValue();//正则表达式
-						//data中具体变量的值取得--变量名为itemJso.getVisibilityControl()
-						JSONValue visibilityValue = JsonPath.select(jsonValue.isObject(), "$.data.."+itemJso.getVisibilityControl());
-						JSONArray visibilityArray =  visibilityValue.isArray();
-						//变量值表现为["1"],首先去除"[]"--数组第一个元素
-						if(visibilityArray!=null&&visibilityArray.size()>0){
+					if (itemJso != null && itemJso.getVisibilityControl() != null
+							&& itemJso.getVisibilityControl().length() > 0) {
+						String visibilityDefinedValue = itemJso.getVisibilityValue();// 正则表达式
+						// data中具体变量的值取得--变量名为itemJso.getVisibilityControl()
+						JSONValue visibilityValue = JsonPath.select(jsonValue.isObject(),
+								"$.data.." + itemJso.getVisibilityControl());
+						JSONArray visibilityArray = visibilityValue.isArray();
+						// 变量值表现为["1"],首先去除"[]"--数组第一个元素
+						if (visibilityArray != null && visibilityArray.size() > 0) {
 							String value = StringUtils.getRidOfQuotes(visibilityArray.get(0).toString());
-							//System.err.println(value);
+							// System.err.println(value);
 							// Compile and use regular expression
 							String patternStr = visibilityDefinedValue;
 							RegExp regExp = RegExp.compile(patternStr);
 							MatchResult matcher = regExp.exec(value);
-							boolean matchFound = (matcher != null); // equivalent to regExp.test(inputStr);
-							if (matchFound) {
+							boolean matchFound = (matcher != null); // equivalent
+																	// to
+																	// regExp.test(inputStr);
+							if (!matchFound) {//满足则加入待显示数组;不满足则下个section
 								continue;
 							}
-							//Pattern pattern = Pattern.compile(visibilityDefinedValue);
-							//Matcher matcher = pattern.matcher(value);							
-							//if(matcher.matches()){
-								//continue;
-							//}
+
 						}
-						
 					}
-					items.add(elementJSONObject);
-				}
-				//针对每个section,加入其下的各类输入元素
-				JSONValue xpathrowResult = JsonPath.select(elementJSONObject, "$.elements");
-				JSONArray xpathRowArray = xpathrowResult.isArray();
-				if (xpathRowArray != null) {
-					for (int row = 0; row < xpathRowArray.size(); row++) {//column块
-						JSONObject xpathResultRow = xpathRowArray.get(row).isObject();
-						xpathResult = JsonPath.select(xpathResultRow, "$.elements");
-						JSONArray xpathLeafArray = xpathResult.isArray();
-						if (xpathLeafArray != null) {
-							for (int j = 0; j < xpathLeafArray.size(); j++) {//field块
-								JSONObject leafJSONObject = xpathLeafArray.get(j).isObject();
-								if (Constants.isProcessedType(leafJSONObject.get(Constants.ELEMENT_CLASSNAME))) {
-									// System.err.println(elementJSONObject.toString());
-									items.add(leafJSONObject);
+					items.add(elementJSONObject);// 加入section块
+					// 针对每个section,加入其下的各类输入元素
+					JSONValue xpathrowResult = JsonPath.select(elementJSONObject, "$.elements");
+					JSONArray xpathRowArray = xpathrowResult.isArray();
+					if (xpathRowArray != null) {
+						for (int row = 0; row < xpathRowArray.size(); row++) {// column块
+							JSONObject xpathResultRow = xpathRowArray.get(row).isObject();
+							xpathResult = JsonPath.select(xpathResultRow, "$.elements");
+							JSONArray xpathLeafArray = xpathResult.isArray();
+							if (xpathLeafArray != null) {
+								for (int j = 0; j < xpathLeafArray.size(); j++) {// field块
+									JSONObject leafJSONObject = xpathLeafArray.get(j).isObject();
+									if (Constants.isProcessedType(leafJSONObject.get(Constants.ELEMENT_CLASSNAME))) {
+										// System.err.println(elementJSONObject.toString());
+										items.add(leafJSONObject);
+									}
 								}
 							}
-						}	
+						}
 					}
-				}	
-				
+
+				}
+
 			}
 		}
-		
-		
+
 		// 定位后结果遍历
-//		JSONArray xpathResultArray = xpathResult.isArray();
-//		if (xpathResultArray != null) {
-//			for (int i = 0; i < xpathResultArray.size(); i++) {
-//				// xpath定位的每个结果都是数组"[]"
-//				JSONValue xpathResultElement = xpathResultArray.get(i);
-//
-//				JSONArray elementArray = xpathResultElement.isArray();
-//				if (elementArray != null) {
-//					for (int j = 0; j < elementArray.size(); j++) {
-//						JSONValue element = elementArray.get(j);
-//						JSONObject elementJSONObject = element.isObject();
-//						// System.err.println(elementJSONObject.get("className"));
-//						JSONValue className = elementJSONObject.get(Constants.ELEMENT_CLASSNAME);
-//						
-//					}
-//				}
-//			}
-//		}
+		// JSONArray xpathResultArray = xpathResult.isArray();
+		// if (xpathResultArray != null) {
+		// for (int i = 0; i < xpathResultArray.size(); i++) {
+		// // xpath定位的每个结果都是数组"[]"
+		// JSONValue xpathResultElement = xpathResultArray.get(i);
+		//
+		// JSONArray elementArray = xpathResultElement.isArray();
+		// if (elementArray != null) {
+		// for (int j = 0; j < elementArray.size(); j++) {
+		// JSONValue element = elementArray.get(j);
+		// JSONObject elementJSONObject = element.isObject();
+		// // System.err.println(elementJSONObject.get("className"));
+		// JSONValue className =
+		// elementJSONObject.get(Constants.ELEMENT_CLASSNAME);
+		//
+		// }
+		// }
+		// }
+		// }
 		return items;
 	}
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//递归实现页面代码备份
+
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 递归实现页面代码备份
 	// /**
 	// * 得到定义页面元素的json数组
 	// *
@@ -139,7 +140,7 @@ public class FormItemsJso extends JavaScriptObject {
 	// return getItemsByRecursion(jsonObject.getJavaScriptObject());
 	// }
 	//
-	
+
 	//
 	// public final List<JSONObject> getItemsByRecursion(JavaScriptObject
 	// javaScriptObject) {
@@ -195,7 +196,7 @@ public class FormItemsJso extends JavaScriptObject {
 	// }
 	// return items;
 	// }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * 得到页面元素的值
@@ -217,9 +218,9 @@ public class FormItemsJso extends JavaScriptObject {
 					String value = "";
 					if (jsonValues.get(key) != null) {
 						value = jsonValues.get(key).toString();
-						//去除前后双引号
-						value=value.substring(1);
-						value=value.substring(0,value.length()-1);
+						// 去除前后双引号
+						value = value.substring(1);
+						value = value.substring(0, value.length() - 1);
 					}
 					map.put(key, value);
 				}

@@ -1,4 +1,4 @@
 {
- "JOGET_BASE_URL":"http://10.25.68.115:8090/jw/web/",
+ "JOGET_BASE_URL":"http://support.valuprosys.com:8084/jw/web/",
  "JOGET_SERVER_IDENTIFINATION":"?j_username=master&hash=CABB95C4E279DCCFB68EE56F567CB61F"
 }
