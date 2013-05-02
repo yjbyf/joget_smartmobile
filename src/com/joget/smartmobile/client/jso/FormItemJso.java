@@ -10,58 +10,67 @@ public class FormItemJso extends JavaScriptObject {
 	protected FormItemJso() {
 	}
 
-	public final native String getId() 
+	public final native boolean getReadonly()
+	/*-{
+		//debugger;
+		if (this.readonly == "true") {
+			return true;
+		} else {
+			return false;
+		}
+	}-*/;
+
+	public final native String getId()
 	/*-{
 		//debugger;
 		return this.properties.id;
 	}-*/;
-	
-	public final native String getLabel() 
+
+	public final native String getLabel()
 	/*-{
 		//debugger;
 		return this.properties.label;
 	}-*/;
-	
-	public final native String getValue() 
+
+	public final native String getValue()
 	/*-{
 		//debugger;
 		return this.properties.value;
 	}-*/;
-	
-	public final native String getWorkflowVariable() 
+
+	public final native String getWorkflowVariable()
 	/*-{
 		//debugger;
 		return this.properties.workflowVariable;
 	}-*/;
-	
+
 	public final native int getOptionsLength()
 	/*-{
 		//debugger;
 		return this.properties.options.length;
 	}-*/;
-	
-	
+
 	public final native String getOptionLabel(int index)
 	/*-{
 		//debugger;
 		return this.properties.options[index].label;
 	}-*/;
-	
+
 	public final native String getOptionValue(int index)
 	/*-{
 		return this.properties.options[index].value;
 	}-*/;
-	
+
 	public final native String getVisibilityControl()
 	/*-{
 		//debugger;
 		return this.properties.visibilityControl;
 	}-*/;
-	
+
 	public final native String getVisibilityValue()
 	/*-{
 		//debugger;
 		return this.properties.visibilityValue;
 	}-*/;
-		
+
 }

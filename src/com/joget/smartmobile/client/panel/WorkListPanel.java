@@ -73,7 +73,7 @@ public class WorkListPanel extends ScrollablePanel {
 				WorkItemJso data = (WorkItemJso) selectedRecord.getAttributeAsObject(Constants.RECORD);
 				// SC.say(data.getId());
 
-				WorkListForm workListForm = new WorkListForm(data, WorkListPanel.this);
+				WorkListForm workListForm = new WorkListForm(data, WorkListPanel.this,navigationStack);
 				navigationStack.push(workListForm);
 
 			}

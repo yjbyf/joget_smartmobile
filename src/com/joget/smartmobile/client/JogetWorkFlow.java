@@ -62,7 +62,7 @@ public class JogetWorkFlow implements EntryPoint, PropReaderClient {
 	@Override
 	public void onSuccess(PropReader instance) {
 		// TODO Auto-generated method stub
-		Constants.initWorkFlowConstants(instance.getJogetBaseUrl(), instance.getJogetServerIdentifination());
+		Constants.initWorkFlowConstants(instance.getJogetBaseUrl(), instance.getJogetServerIdentifination(),instance.getAdminName());
 		loadPage();
 	}
 

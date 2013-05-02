@@ -12,7 +12,16 @@ public class PropReader {
 	 
 	private String jogetBaseUrl = "";
 	private String jogetServerIdentifination = "";
+	private String adminName = "";
 	
+	public String getAdminName() {
+		return adminName;
+	}
+
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
+
 	public String getJogetBaseUrl() {
 		return jogetBaseUrl;
 	}
@@ -48,6 +57,8 @@ public class PropReader {
 							+ ""));
 					instance.setJogetServerIdentifination(StringUtils.getRidOfQuotes(jsonObject
 							.get(Constants.PROP_JOGET_SERVER_IDENTIFINATION) + ""));
+					instance.setAdminName(StringUtils.getRidOfQuotes(jsonObject
+							.get(Constants.PROP_AMDIN_NAME) + ""));
 					client.onSuccess(instance);
 					// SC.say(r.getText());
 
