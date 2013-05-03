@@ -6,6 +6,10 @@ public class Constants {
 
 	public final static String RECORD = "record";
 	public final static String YES = "Yes";
+	
+	//tableview
+	public static final String ID_PROPERTY = "_id";
+	public static final String CONTENT_PROPERTY = "content";
 
 	// joget路径相关
 	public static String JOGET_BASE_URL = "";// PropReader.jogetBaseUrl;//"http://10.25.68.115:8090/jw/web/";

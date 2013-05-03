@@ -19,15 +19,15 @@ import com.smartgwt.mobile.client.widgets.tableview.RecordFormatter;
 import com.smartgwt.mobile.client.widgets.tableview.TableView;
 
 public class WorkFlowHistoryPanel extends ScrollablePanel {
-	private static final String ID_PROPERTY = "_id";
-	private static final String CONTENT_PROPERTY = "content";
+	
+	
 
 	private String workflow_history_url;
 
 	private static Record createRecord(String id, String content) {
 		final Record record = new Record();
-		record.setAttribute(ID_PROPERTY, id);
-		record.setAttribute(CONTENT_PROPERTY, content);
+		record.setAttribute(Constants.ID_PROPERTY, id);
+		record.setAttribute(Constants.CONTENT_PROPERTY, content);
 		return record;
 	}
 
@@ -40,12 +40,12 @@ public class WorkFlowHistoryPanel extends ScrollablePanel {
 		// tableView.setTitleField("title");
 		// tableView.setShowNavigation(false);
 		// tableView.setShowIcons(true);
-		// tableView.setTableMode(TableMode.GROUPED);
+		tableView.setTableMode(TableMode.GROUPED);
 
 		tableView.setRecordFormatter(new RecordFormatter() {
 			@Override
 			public String format(Record record) {
-				return record.getAttribute(CONTENT_PROPERTY);
+				return record.getAttribute(Constants.CONTENT_PROPERTY);
 			}
 		});
 

@@ -21,6 +21,7 @@ import com.smartgwt.mobile.client.util.SC;
 import com.smartgwt.mobile.client.widgets.ScrollablePanel;
 import com.smartgwt.mobile.client.widgets.events.ClickEvent;
 import com.smartgwt.mobile.client.widgets.events.ClickHandler;
+import com.smartgwt.mobile.client.widgets.tableview.RecordFormatter;
 import com.smartgwt.mobile.client.widgets.tableview.TableView;
 import com.smartgwt.mobile.client.widgets.tableview.events.RecordNavigationClickEvent;
 import com.smartgwt.mobile.client.widgets.tableview.events.RecordNavigationClickHandler;
@@ -55,10 +56,17 @@ public class WorkListPanel extends ScrollablePanel {
 
 		this.setWidth("100%");
 
-		tableView.setTitleField("title");
-		tableView.setShowNavigation(false);
-		tableView.setShowIcons(true);
+		//tableView.setTitleField("title");
+		//tableView.setShowNavigation(false);
+		//tableView.setShowIcons(true);
 		tableView.setTableMode(TableMode.GROUPED);
+		
+		tableView.setRecordFormatter(new RecordFormatter() {
+			@Override
+			public String format(Record record) {
+				return record.getAttribute(Constants.CONTENT_PROPERTY);
+			}
+		});
 		tableView.addRecordNavigationClickHandler(new RecordNavigationClickHandler() {
 			public void onRecordNavigationClick(RecordNavigationClickEvent event) {
 				final Record selectedRecord = event.getRecord();
@@ -105,10 +113,19 @@ public class WorkListPanel extends ScrollablePanel {
 					WorkItemJso data = workListJso.getEntry(i);
 					// SC.say(data.getProcessName());
 					Record record = new Record();
-					record.setAttribute("title", "Process Name:" + data.getProcessName());
-					record.setAttribute("info", "Activity Name:" + data.getActivityName());
-					record.setAttribute("description", "From:"+data.getRequestor());
-					record.setAttribute(Constants.RECORD, data);
+					StringBuffer sb = new StringBuffer();
+					sb.append("Process Name:" + StringUtils.getValue(data.getProcessName()) + "<br>");
+					sb.append("Activity Name:" + StringUtils.getValue(data.getActivityName()) + "<br>");
+					sb.append("From:" + StringUtils.getValue(data.getRequestor()) + "<br>");
+					// record.setAttribute("title", "Process Name:" +
+					// data.getProcessName());
+					// record.setAttribute("info", "Activity Name:" +
+					// data.getActivityName());
+					// record.setAttribute("description",
+					// "From:"+data.getRequestor());
+					record.setAttribute(Constants.ID_PROPERTY, id);
+					record.setAttribute(Constants.CONTENT_PROPERTY, sb.toString());
+					//record.setAttribute(Constants.RECORD, data);
 					recordList.add(record);
 				}
 				tableView.setData(recordList);
