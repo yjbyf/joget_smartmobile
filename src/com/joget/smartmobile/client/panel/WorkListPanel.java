@@ -125,7 +125,7 @@ public class WorkListPanel extends ScrollablePanel {
 					// "From:"+data.getRequestor());
 					record.setAttribute(Constants.ID_PROPERTY, id);
 					record.setAttribute(Constants.CONTENT_PROPERTY, sb.toString());
-					//record.setAttribute(Constants.RECORD, data);
+					record.setAttribute(Constants.RECORD, data);
 					recordList.add(record);
 				}
 				tableView.setData(recordList);
