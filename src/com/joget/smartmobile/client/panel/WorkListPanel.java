@@ -114,9 +114,9 @@ public class WorkListPanel extends ScrollablePanel {
 					// SC.say(data.getProcessName());
 					Record record = new Record();
 					StringBuffer sb = new StringBuffer();
+					sb.append("From:" + StringUtils.getValue(data.getRequestor()) + "<br>");
 					sb.append("Process Name:" + StringUtils.getValue(data.getProcessName()) + "<br>");
 					sb.append("Activity Name:" + StringUtils.getValue(data.getActivityName()) + "<br>");
-					sb.append("From:" + StringUtils.getValue(data.getRequestor()) + "<br>");
 					// record.setAttribute("title", "Process Name:" +
 					// data.getProcessName());
 					// record.setAttribute("info", "Activity Name:" +
