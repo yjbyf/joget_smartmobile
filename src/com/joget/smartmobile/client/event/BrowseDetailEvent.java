@@ -1,27 +1,30 @@
 package com.joget.smartmobile.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
-import com.joget.smartmobile.client.jso.WorkItemJso;
-import com.joget.smartmobile.client.panel.WorkListPanel;
+import com.smartgwt.mobile.client.data.Record;
 
 public class BrowseDetailEvent extends GwtEvent<BrowseDetailEventHandler> {
 	
 	public static Type<BrowseDetailEventHandler> TYPE = new Type<BrowseDetailEventHandler>();
-	private WorkItemJso workItemJso;
-	private WorkListPanel workListPanel;
-
-	public BrowseDetailEvent(WorkItemJso workItemJso, WorkListPanel workListPanel) {
-		this.workItemJso = workItemJso;
-		this.workListPanel = workListPanel;
+	private Record record;
+	
+	public Record getRecord() {
+		return record;
 	}
 
-	public WorkItemJso getWorkItemJso() {
-		return workItemJso;
+	//private WorkItemJso workItemJso;
+	//private WorkListPanel workListPanel;
+
+	public BrowseDetailEvent(Record selectedRecord) {
+		this.record = selectedRecord;
+		//this.workListPanel = workListPanel;
 	}
 
-	public WorkListPanel getWorkListPanel() {
-		return workListPanel;
-	}
+	
+
+	// public WorkListPanel getWorkListPanel() {
+	// return workListPanel;
+	// }
 
 	@Override
 	public Type<BrowseDetailEventHandler> getAssociatedType() {

@@ -10,6 +10,7 @@ import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.joget.smartmobile.client.activityIndicator.ProgressIndicator;
 import com.joget.smartmobile.client.event.BrowseWorkFlowHisEvent;
+import com.joget.smartmobile.client.event.RefreshWorkListEvent;
 import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.factory.FormItemsFactory;
 import com.joget.smartmobile.client.items.OperationPickerItem;
@@ -66,9 +67,9 @@ public class WorkListForm extends ScrollablePanel {
 		return noteItem;
 	}
 
-	public WorkListForm(WorkItemJso workItemJso, WorkListPanel parent) {
+	public WorkListForm(WorkItemJso workItemJso) {
 		super("WorkListDetail");
-		final WorkListPanel parentPanel = parent;
+		//final WorkListPanel parentPanel = parent;
 		final String activityId = workItemJso.getActivityId();
 		final String processId = workItemJso.getProcessId();
 		final VLayout vlayout = new VLayout();
@@ -224,7 +225,8 @@ public class WorkListForm extends ScrollablePanel {
 								public void onSuccess(JavaScriptObject result) {
 									// SC.say("Success");									
 									button.setTitle("Succeded");
-									parentPanel.reloadData();
+									clientFactory.getEventBus().fireEvent(new RefreshWorkListEvent());
+									//parentPanel.reloadData();
 									//操作成功后返回
 									clientFactory.getNavstack().pop();
 								}
