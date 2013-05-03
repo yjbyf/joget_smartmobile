@@ -2,11 +2,13 @@ package com.joget.smartmobile.client.form;
 
 import java.util.Map;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.factory.FormItemsFactory;
 import com.joget.smartmobile.client.items.OperationPickerItem;
 import com.joget.smartmobile.client.jso.FormItemsJso;
@@ -32,7 +34,6 @@ import com.smartgwt.mobile.client.widgets.form.DynamicForm;
 import com.smartgwt.mobile.client.widgets.form.fields.FormItem;
 import com.smartgwt.mobile.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.mobile.client.widgets.form.fields.TextItem;
-import com.smartgwt.mobile.client.widgets.layout.NavStack;
 import com.smartgwt.mobile.client.widgets.layout.VLayout;
 import com.smartgwt.mobile.client.widgets.tableview.TableView;
 import com.smartgwt.mobile.client.widgets.tableview.events.DetailsSelectedEvent;
@@ -45,6 +46,7 @@ import com.smartgwt.mobile.client.widgets.tableview.events.DetailsSelectedHandle
  * 
  */
 public class WorkListForm extends ScrollablePanel {
+	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
 	private DynamicForm dynamicForm = new DynamicForm();
 	private TextItem processNameItem;
 	private TextItem activityNameItem;
@@ -57,7 +59,6 @@ public class WorkListForm extends ScrollablePanel {
 
 	private JsonpRequestBuilder rb = new JsonpRequestBuilder();
 
-	private NavStack navigationStack;
 
 	private FormItemsFactory formItemsFactory = new FormItemsFactory();
 
@@ -65,9 +66,8 @@ public class WorkListForm extends ScrollablePanel {
 		return noteItem;
 	}
 
-	public WorkListForm(WorkItemJso workItemJso, WorkListPanel parent, NavStack navigation) {
+	public WorkListForm(WorkItemJso workItemJso, WorkListPanel parent) {
 		super("WorkList Detail");
-		this.navigationStack = navigation;
 		final WorkListPanel parentPanel = parent;
 		final String activityId = workItemJso.getActivityId();
 		final String processId = workItemJso.getProcessId();
@@ -244,7 +244,7 @@ public class WorkListForm extends ScrollablePanel {
 			public void onDetailsSelected(DetailsSelectedEvent event) {
 				Record selectedRecord = event.getRecord();
 				if (selectedRecord != null) {
-					navigationStack.push(new WorkFlowHistoryPanel(selectedRecord.getAttribute("title"), jso
+					clientFactory.getNavstack().push(new WorkFlowHistoryPanel(selectedRecord.getAttribute("title"), jso
 							.getProcessId()));
 				}
 			}

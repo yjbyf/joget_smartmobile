@@ -1,28 +1,28 @@
 package com.joget.smartmobile.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.panel.WorkListPanel;
 import com.joget.smartmobile.client.utils.Constants;
 import com.joget.smartmobile.client.utils.PropReader;
 import com.joget.smartmobile.client.utils.PropReaderClient;
 import com.smartgwt.mobile.client.util.SC;
-import com.smartgwt.mobile.client.widgets.layout.NavStack;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class JogetWorkFlow implements EntryPoint, PropReaderClient {
 	// handles application pages history and transitions
-	private NavStack navigationStack;
+	//private NavStack navigationStack;
+	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
 
 	// 加载页面
 	private void loadPage() {
-		WorkListPanel workListPanel = new WorkListPanel("WorkList");
-		navigationStack = new NavStack(workListPanel);
-		// 传递stack供后续使用
-		workListPanel.setNavigationStack(navigationStack);
-		RootLayoutPanel.get().add(navigationStack);
+		WorkListPanel workListPanel = new WorkListPanel("WorkList");		
+		clientFactory.getNavstack().push(workListPanel);
+		RootLayoutPanel.get().add(clientFactory.getNavstack());
 	}
 
 	/**

@@ -1,9 +1,11 @@
 package com.joget.smartmobile.client.panel;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.form.WorkListForm;
 import com.joget.smartmobile.client.jso.WorkItemJso;
 import com.joget.smartmobile.client.jso.WorkListJso;
@@ -17,7 +19,6 @@ import com.smartgwt.mobile.client.widgets.ActivityIndicator;
 import com.smartgwt.mobile.client.widgets.ScrollablePanel;
 import com.smartgwt.mobile.client.widgets.events.ClickEvent;
 import com.smartgwt.mobile.client.widgets.events.ClickHandler;
-import com.smartgwt.mobile.client.widgets.layout.NavStack;
 import com.smartgwt.mobile.client.widgets.tableview.TableView;
 import com.smartgwt.mobile.client.widgets.tableview.events.RecordNavigationClickEvent;
 import com.smartgwt.mobile.client.widgets.tableview.events.RecordNavigationClickHandler;
@@ -36,20 +37,17 @@ import com.smartgwt.mobile.client.widgets.toolbar.ToolStripButton;
  */
 
 public class WorkListPanel extends ScrollablePanel {
+	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
+	
 	private ActivityIndicator activityIndicator = new ActivityIndicator();
-	private NavStack navigationStack;
-
-	public void setNavigationStack(NavStack navigationStack) {
-		this.navigationStack = navigationStack;
-	}
 
 	private JsonpRequestBuilder rb = new JsonpRequestBuilder();
 	private ToolStripButton refreshBtn = new ToolStripButton("Refresh");
-	private ToolStripButton listGridBtn = new ToolStripButton("testGrid");
+	// private ToolStripButton listGridBtn = new ToolStripButton("testGrid");
 	private TableView tableView = new TableView();
 	private ToolStrip toolbar = new ToolStrip();
 
-	private String userId = Location.getParameter("userId")+"";
+	private String userId = Location.getParameter("userId") + "";
 
 	public WorkListPanel(String title) {
 		super(title);
@@ -73,8 +71,8 @@ public class WorkListPanel extends ScrollablePanel {
 				WorkItemJso data = (WorkItemJso) selectedRecord.getAttributeAsObject(Constants.RECORD);
 				// SC.say(data.getId());
 
-				WorkListForm workListForm = new WorkListForm(data, WorkListPanel.this,navigationStack);
-				navigationStack.push(workListForm);
+				WorkListForm workListForm = new WorkListForm(data, WorkListPanel.this);
+				clientFactory.getNavstack().push(workListForm);
 
 			}
 		});
@@ -84,18 +82,18 @@ public class WorkListPanel extends ScrollablePanel {
 				WorkListPanel.this.reloadData();
 			}
 		});
-		
-		listGridBtn.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				navigationStack.push(new TestGridPanel("test"));
-			}
-		});
-		
+
+		// listGridBtn.addClickHandler(new ClickHandler() {
+		// @Override
+		// public void onClick(ClickEvent event) {
+		// // TODO Auto-generated method stub
+		// NavigationStack.navstack.push(new TestGridPanel("test"));
+		// }
+		// });
+
 		toolbar.setAlign(Alignment.CENTER);
 		toolbar.addButton(refreshBtn);
-		toolbar.addButton(listGridBtn);
+		// toolbar.addButton(listGridBtn);
 		this.addMember(tableView);
 		this.addMember(toolbar);
 

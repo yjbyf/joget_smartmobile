@@ -45,6 +45,8 @@ public class WorkFlowHistoryPanel extends ScrollablePanel {
 					// ImageResources.INSTANCE.ipod());
 					record.setAttribute("info", "审批人:" +  StringUtils.getValue(workFlowHistoryJso.getAssignee()) + "审批时间:"
 							+  StringUtils.getValue(workFlowHistoryJso.getDateCompleted()));
+					record.setAttribute("time", "审批时间:"
+							+  StringUtils.getValue(workFlowHistoryJso.getDateCompleted()));
 					record.setAttribute("description", "批注:" +  StringUtils.getValue(workFlowHistoryJso.getComment()));
 
 					recordList.add(record);
