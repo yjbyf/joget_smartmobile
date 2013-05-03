@@ -8,12 +8,13 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.joget.smartmobile.client.activityIndicator.ProgressIndicator;
+import com.joget.smartmobile.client.event.BrowseWorkFlowHisEvent;
 import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.factory.FormItemsFactory;
 import com.joget.smartmobile.client.items.OperationPickerItem;
 import com.joget.smartmobile.client.jso.FormItemsJso;
 import com.joget.smartmobile.client.jso.WorkItemJso;
-import com.joget.smartmobile.client.panel.WorkFlowHistoryPanel;
 import com.joget.smartmobile.client.panel.WorkListPanel;
 import com.joget.smartmobile.client.utils.Constants;
 import com.joget.smartmobile.client.utils.StringUtils;
@@ -59,7 +60,6 @@ public class WorkListForm extends ScrollablePanel {
 
 	private JsonpRequestBuilder rb = new JsonpRequestBuilder();
 
-
 	private FormItemsFactory formItemsFactory = new FormItemsFactory();
 
 	public TextAreaItem getNoteItem() {
@@ -67,11 +67,13 @@ public class WorkListForm extends ScrollablePanel {
 	}
 
 	public WorkListForm(WorkItemJso workItemJso, WorkListPanel parent) {
-		super("WorkList Detail");
+		super("WorkListDetail");
 		final WorkListPanel parentPanel = parent;
 		final String activityId = workItemJso.getActivityId();
 		final String processId = workItemJso.getProcessId();
 		final VLayout vlayout = new VLayout();
+		final TableView workFlowHisTableView = new TableView();
+		final Button opBtn = new Button("Complete");
 		vlayout.setWidth("100%");
 		// final VLayout actionButtonLayout = new VLayout();
 
@@ -89,10 +91,73 @@ public class WorkListForm extends ScrollablePanel {
 		// dynamicForm.getDataSource().setDataURL("/sampleResponses/validationError");
 		// toolbar.setAlign(Alignment.CENTER);
 
-		// 得到按钮
-		Button opBtn = new Button("Complete");
-		opBtn.addClickHandler(new ClickHandler() {
+		// 加载页面form的Items
+		String formItemUrl = Constants.JOGET_FORM_ITEMS_URL.replaceFirst(Constants.V_LOGIN_AS, userId);
+		formItemUrl = formItemUrl.replaceAll(Constants.V_PROCESS_ID, workItemJso.getProcessId());
+		formItemUrl = formItemUrl.replaceAll(Constants.V_ACTIVITY_ID, workItemJso.getActivityId());
 
+		workFlowHisTableView.setTitleField("title");
+		workFlowHisTableView.setShowNavigation(true);
+		workFlowHisTableView.setNavigationMode(NavigationMode.NAVICON_ONLY);
+		workFlowHisTableView.setCanReorderRecords(true);
+		workFlowHisTableView.setTableMode(TableMode.GROUPED);
+
+		// tableView.setTitleField("title");
+		// tableView.setShowNavigation(true);
+		// tableView.setSelectionType(SelectionStyle.SINGLE);
+		// tableView.setShowDetailCount(true);
+		// tableView.setNavigationMode(NavigationMode.WHOLE_RECORD);
+		// //tableView.setParentNavStack(this);
+		// tableView.setTableMode(TableMode.GROUPED);
+		RecordList recordList = new RecordList();
+		Record record = new Record();
+		record.setAttribute("_id", 1);
+		record.setAttribute("title", "审批历史记录");
+		// record.setAttribute("detailCount", 1);
+		recordList.add(record);
+		workFlowHisTableView.setData(recordList);
+
+		final WorkItemJso jso = workItemJso;
+		workFlowHisTableView.addDetailsSelectedHandler(new DetailsSelectedHandler() {
+			@Override
+			public void onDetailsSelected(DetailsSelectedEvent event) {
+				Record selectedRecord = event.getRecord();
+				if (selectedRecord != null) {
+					clientFactory.getEventBus().fireEvent(new BrowseWorkFlowHisEvent(jso.getProcessId()));
+				}
+			}
+		});
+
+		// actionButtonLayout.addMember(loadingButton);
+		vlayout.addMember(dynamicForm);
+		// vlayout.addMember(new HRWidget());
+		vlayout.addMember(workFlowHisTableView);
+		// vlayout.addMember(new HRWidget());
+		vlayout.addMember(opBtn);
+		
+		addMember(vlayout);
+		ProgressIndicator.show(this);
+
+		rb.requestObject(formItemUrl, new AsyncCallback<JavaScriptObject>() {
+			@Override
+			public void onSuccess(JavaScriptObject result) {
+				FormItemsJso formItemJso = (FormItemsJso) result;
+				// 得到控件定义
+
+				final Canvas[] formItems = formItemsFactory.getItems(formItemJso.getFormId(), formItemJso.getItems(),
+						formItemJso.getValueMap());
+
+				// 展示控件
+				dynamicForm.setFields(formItems);
+				ProgressIndicator.hide(WorkListForm.this);
+			}
+
+			public void onFailure(Throwable caught) {
+				// output.setText("ERROR");
+			}
+		});
+
+		opBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				finish_workflow_url = Constants.JOGET_DO_ACITIVITY_URL;
@@ -138,10 +203,7 @@ public class WorkListForm extends ScrollablePanel {
 						// System.err.println(" value-->"+criterion.getValue());
 					}
 				}
-				// if((op==null||op.length()==0)){
-				// SC.say("ERROR","Plz pick an Operation");
-				// return;
-				// }
+			
 				Dialog dialog = new Dialog("Do you like continue?");
 				dialog.setButtons(Dialog.YES, Dialog.NO);
 				dialog.addButtonClickHandler(new ButtonClickHandler() {
@@ -150,27 +212,21 @@ public class WorkListForm extends ScrollablePanel {
 						final Button button = event.getButton();
 						button.setDisabled(true);
 						if (button.getTitle().equals(Constants.YES)) {
-							// SC.say(button.getTitle());
-
-							// finish_workflow_url =
-							// finish_workflow_url.replaceAll(Constants.V_VAR_STATUS,
-							// op);
 							// //////////////////////////////////////////////////////////////////
-							// TODO 遍历form下所有formItem，若id不为空，则拼接到url最后,id=value
-							// 修改为以下逻辑
 							// 遍历workflowVariableMap中的元素，若值为空，则为form变量
 							// 若值不为空，则 是工作流相关变量，老办法拼接url
-
 							// ///////////////////////////////////////////////////////////////////
-							//System.err.println(finish_workflow_url);
+							// System.err.println(finish_workflow_url);
 							// 提交操作
 							JsonpRequestBuilder rb = new JsonpRequestBuilder();
 							rb.requestObject(finish_workflow_url, new AsyncCallback<JavaScriptObject>() {
 								@Override
 								public void onSuccess(JavaScriptObject result) {
-									// SC.say("Success");
+									// SC.say("Success");									
 									button.setTitle("Succeded");
 									parentPanel.reloadData();
+									//操作成功后返回
+									clientFactory.getNavstack().pop();
 								}
 
 								public void onFailure(Throwable caught) {
@@ -188,77 +244,6 @@ public class WorkListForm extends ScrollablePanel {
 			}
 
 		});
-
-		// 加载页面form的Items
-		String formItemUrl = Constants.JOGET_FORM_ITEMS_URL.replaceFirst(Constants.V_LOGIN_AS, userId);
-		formItemUrl = formItemUrl.replaceAll(Constants.V_PROCESS_ID, workItemJso.getProcessId());
-		formItemUrl = formItemUrl.replaceAll(Constants.V_ACTIVITY_ID, workItemJso.getActivityId());
-
-		rb.requestObject(formItemUrl, new AsyncCallback<JavaScriptObject>() {
-			@Override
-			public void onSuccess(JavaScriptObject result) {
-				FormItemsJso formItemJso = (FormItemsJso) result;
-				// 得到控件定义
-
-				final Canvas[] formItems = formItemsFactory.getItems(formItemJso.getFormId(), formItemJso.getItems(),
-						formItemJso.getValueMap());
-				dynamicForm.setFields(formItems);
-
-				// generateItems(FormItemsFactory.getItems(formItemJso.getItems()));
-				// 页面form的items的value
-
-				// 展示控件
-			}
-
-			public void onFailure(Throwable caught) {
-				// output.setText("ERROR");
-			}
-		});
-
-		final TableView workFlowHisTableView = new TableView();
-
-		workFlowHisTableView.setTitleField("title");
-		workFlowHisTableView.setShowNavigation(true);
-		workFlowHisTableView.setNavigationMode(NavigationMode.NAVICON_ONLY);
-		workFlowHisTableView.setCanReorderRecords(true);
-		workFlowHisTableView.setTableMode(TableMode.GROUPED);
-
-		// tableView.setTitleField("title");
-		// tableView.setShowNavigation(true);
-		// tableView.setSelectionType(SelectionStyle.SINGLE);
-		// tableView.setShowDetailCount(true);
-		// tableView.setNavigationMode(NavigationMode.WHOLE_RECORD);
-		// //tableView.setParentNavStack(this);
-		// tableView.setTableMode(TableMode.GROUPED);
-		RecordList recordList = new RecordList();
-		Record record = new Record();
-		record.setAttribute("_id", 1);
-		record.setAttribute("title", "审批历史记录");
-		// record.setAttribute("detailCount", 1);
-		recordList.add(record);
-		workFlowHisTableView.setData(recordList);
-
-		final WorkItemJso jso = workItemJso;
-		workFlowHisTableView.addDetailsSelectedHandler(new DetailsSelectedHandler() {
-			@Override
-			public void onDetailsSelected(DetailsSelectedEvent event) {
-				Record selectedRecord = event.getRecord();
-				if (selectedRecord != null) {
-					clientFactory.getNavstack().push(new WorkFlowHistoryPanel(selectedRecord.getAttribute("title"), jso
-							.getProcessId()));
-				}
-			}
-		});
-
-		// actionButtonLayout.addMember(loadingButton);
-		vlayout.addMember(dynamicForm);
-		// vlayout.addMember(new HRWidget());
-		vlayout.addMember(workFlowHisTableView);
-		// vlayout.addMember(new HRWidget());
-		vlayout.addMember(opBtn);
-
-		addMember(vlayout);
-
 	}
 
 }

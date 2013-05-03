@@ -2,9 +2,8 @@ package com.joget.smartmobile.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.joget.smartmobile.client.event.BrowseWorkListEvent;
 import com.joget.smartmobile.client.factory.ClientFactory;
-import com.joget.smartmobile.client.panel.WorkListPanel;
 import com.joget.smartmobile.client.utils.Constants;
 import com.joget.smartmobile.client.utils.PropReader;
 import com.joget.smartmobile.client.utils.PropReaderClient;
@@ -18,18 +17,13 @@ public class JogetWorkFlow implements EntryPoint, PropReaderClient {
 	//private NavStack navigationStack;
 	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
 
-	// 加载页面
-	private void loadPage() {
-		WorkListPanel workListPanel = new WorkListPanel("WorkList");		
-		clientFactory.getNavstack().push(workListPanel);
-		RootLayoutPanel.get().add(clientFactory.getNavstack());
-	}
 
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-
+		JogetWorkFlowApp app = new JogetWorkFlowApp();
+		app.go();
 		// Using an ExternalTextResource--读取服务器配置
 		PropReader.readAsync(this);
 		
@@ -61,9 +55,10 @@ public class JogetWorkFlow implements EntryPoint, PropReaderClient {
 
 	@Override
 	public void onSuccess(PropReader instance) {
-		// TODO Auto-generated method stub
+		//初始化地址相关常量
 		Constants.initWorkFlowConstants(instance.getJogetBaseUrl(), instance.getJogetServerIdentifination(),instance.getAdminName());
-		loadPage();
+		//加载页面
+		clientFactory.getEventBus().fireEvent(new BrowseWorkListEvent());
 	}
 
 	@Override

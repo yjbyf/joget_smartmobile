@@ -31,6 +31,12 @@ public class WorkItemJso extends JavaScriptObject {
 	/*-{
 		return this.activityId
 	}-*/;
+	
+	public final native String getRequestor()
+	/*-{
+		return this.requestor
+	}-*/;
+	
 
 	
 }

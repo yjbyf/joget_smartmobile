@@ -11,6 +11,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.joget.smartmobile.client.jso.FormItemJso;
 import com.joget.smartmobile.client.utils.Constants;
 import com.joget.smartmobile.client.utils.StringUtils;
+import com.smartgwt.mobile.client.data.Record;
 import com.smartgwt.mobile.client.types.DateItemSelectorFormat;
 import com.smartgwt.mobile.client.widgets.Canvas;
 import com.smartgwt.mobile.client.widgets.form.fields.DateItem;
@@ -19,6 +20,8 @@ import com.smartgwt.mobile.client.widgets.form.fields.SelectItem;
 import com.smartgwt.mobile.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.mobile.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.mobile.client.widgets.form.fields.TextItem;
+import com.smartgwt.mobile.client.widgets.grid.CellFormatter;
+import com.smartgwt.mobile.client.widgets.grid.ListGridField;
 
 public class FormItemsFactory {
 
@@ -73,7 +76,7 @@ public class FormItemsFactory {
 
 			if (item instanceof FormItem) {
 				FormItem formItem = (FormItem) item;
-				//System.err.println(formItem.getName()+":"+formItem.getValue());
+				// System.err.println(formItem.getName()+":"+formItem.getValue());
 				if (formItem.isEnabled()) {
 					if (workflowVariableMap.get(formItem.getID()) != null
 							&& workflowVariableMap.get(formItem.getID()).toString().length() > 0
@@ -81,7 +84,7 @@ public class FormItemsFactory {
 						formItem.setDisabled(false);
 						// form相关的变量也放入映射表中
 						if (validFormVariable(formItem.getID(), formId)
-								&& !workflowVariableMap.containsKey(formItem.getID())) {							
+								&& !workflowVariableMap.containsKey(formItem.getID())) {
 							workflowVariableMap.put(formItem.getID(), "");
 						}
 					} else {
@@ -99,13 +102,13 @@ public class FormItemsFactory {
 		return (id != null && id.startsWith(formId));
 	}
 
-	
-	private void setWorkflowVariable(String id,String workflowVariable){
+	private void setWorkflowVariable(String id, String workflowVariable) {
 		String value = StringUtils.getValue(workflowVariable);
-		if(value.length()>0){
+		if (value.length() > 0) {
 			workflowVariableMap.put(id, workflowVariable);
 		}
 	}
+
 	/**
 	 * 文本框生成
 	 * 
@@ -151,17 +154,22 @@ public class FormItemsFactory {
 
 	}
 
+	/**
+	 * section块相关的界面
+	 * 
+	 * @param formItemJso
+	 * @param valuesMap
+	 * @return
+	 */
 	private StaticTextItem generateStaticTextItem(FormItemJso formItemJso, Map<String, String> valuesMap) {
-		// String workflowVariable = formItemJso.getWorkflowVariable();
-		String label = formItemJso.getLabel();
-		// String value = formItemJso.getValue();
+		final String label = formItemJso.getLabel();
 		StaticTextItem textItem = new StaticTextItem("" + (++id));
 		if (label != null) {
-			textItem.setValue("<b><font color='red'>" + label + "</font></b>");
+			//textItem.setValue("<b><font color='red'>" + label + "</font></b>");
+			//textItem.setContents("<span style='font-weight:bold'><b>" +label + "</b></span>");
+			textItem.setContents("<span style='font-size:15pt;font-style:italic;font-weight:bold'>"+label + "</span>");
 		}
-		// textItem.setID(workflowVariable);
-		// textItem.setValue(valuesMap.get(formItemJso.getId()));
-		// textItem.setValidators(validators)
+		
 		return textItem;
 
 	}
