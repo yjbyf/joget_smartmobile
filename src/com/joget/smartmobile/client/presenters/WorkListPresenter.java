@@ -21,7 +21,7 @@ import com.smartgwt.mobile.client.widgets.events.HasClickHandlers;
 
 public class WorkListPresenter implements Presenter {
 	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
-	//private ClientFactory clientFactory = GWT.create(ClientFactory.class);
+	// private ClientFactory clientFactory = GWT.create(ClientFactory.class);
 	private final Display display;
 
 	public interface Display {
@@ -30,20 +30,23 @@ public class WorkListPresenter implements Presenter {
 		Panel asPanel();
 	}
 
-	public WorkListPresenter(Display view){
-		 this.display = view;
+	public WorkListPresenter(Display view) {
+		this.display = view;
 	}
-	
+
+	/**
+	 * 事件绑定
+	 */
 	@Override
 	public void bind() {
-		display.getRefreshButton().addClickHandler(new ClickHandler() {		
+		display.getRefreshButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(com.smartgwt.mobile.client.widgets.events.ClickEvent event) {
-				//SC.say("refreshing");
+				// SC.say("refreshing");
 				refreshDisplay();
 			}
 		});
-		
+
 		clientFactory.getEventBus().addHandler(RefreshWorkListEvent.TYPE, new RefreshWorkListEventHandler() {
 			@Override
 			public void onRefreshWorkList(RefreshWorkListEvent event) {
@@ -52,6 +55,9 @@ public class WorkListPresenter implements Presenter {
 		});
 	}
 
+	/**
+	 * 加载页面
+	 */
 	@Override
 	public void go() {
 		bind();
@@ -59,11 +65,11 @@ public class WorkListPresenter implements Presenter {
 		RootLayoutPanel.get().add(clientFactory.getNavstack());
 		refreshDisplay();
 	}
-	
+
 	/**
-	 * 刷新页面
+	 * 刷新页面显示
 	 */
-	private void refreshDisplay(){
+	private void refreshDisplay() {
 		ProgressIndicator.show(display.asPanel());
 		String url = Constants.JOGET_WORKlIST_URL.replaceAll(Constants.V_LOGIN_AS, clientFactory.getUserId());
 		JsonpRequestBuilder rb = new JsonpRequestBuilder();
@@ -81,10 +87,11 @@ public class WorkListPresenter implements Presenter {
 
 	/**
 	 * 转换返回的数据格式
+	 * 
 	 * @param result
 	 * @return
 	 */
-	private RecordList translateData(JavaScriptObject result){
+	private RecordList translateData(JavaScriptObject result) {
 		WorkListJso workListJso = (WorkListJso) result;
 		RecordList recordList = new RecordList();
 		for (int i = 0; i < workListJso.dataCount(); i++) {

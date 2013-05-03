@@ -1,18 +1,12 @@
 package com.joget.smartmobile.client.panel;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.joget.smartmobile.client.activityIndicator.ProgressIndicator;
 import com.joget.smartmobile.client.event.BrowseDetailEvent;
-import com.joget.smartmobile.client.event.RefreshWorkListEvent;
 import com.joget.smartmobile.client.factory.ClientFactory;
-import com.joget.smartmobile.client.jso.WorkItemJso;
-import com.joget.smartmobile.client.jso.WorkListJso;
 import com.joget.smartmobile.client.presenters.WorkListPresenter;
 import com.joget.smartmobile.client.utils.Constants;
-import com.joget.smartmobile.client.utils.StringUtils;
 import com.smartgwt.mobile.client.data.Record;
 import com.smartgwt.mobile.client.data.RecordList;
 import com.smartgwt.mobile.client.types.Alignment;
