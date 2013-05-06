@@ -13,7 +13,7 @@ public class WorkFlowHistoryJso extends JavaScriptObject {
 		return this.Assignee
 	}-*/;
 
-	// 审批结
+	// 审批结果
 	public final native String getName()
 	/*-{
 		return this.name
@@ -29,6 +29,12 @@ public class WorkFlowHistoryJso extends JavaScriptObject {
 	public final native String getDateCompleted()
 	/*-{
 		return this.dateCompleted
+	}-*/;
+
+	// 审批时间
+	public final native String getResult()
+	/*-{
+		return this.Result
 	}-*/;
 
 }

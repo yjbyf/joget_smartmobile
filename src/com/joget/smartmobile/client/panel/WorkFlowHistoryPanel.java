@@ -65,6 +65,7 @@ public class WorkFlowHistoryPanel extends ScrollablePanel {
 					sb.append("节点:" + StringUtils.getValue(workFlowHistoryJso.getName()) + "<br>");
 					sb.append("审批人:" + StringUtils.getValue(workFlowHistoryJso.getAssignee()) + "<br>");
 					sb.append("审批时间:" + StringUtils.getValue(workFlowHistoryJso.getDateCompleted()) + "<br>");
+					sb.append("审批结果:" + StringUtils.getValue(workFlowHistoryJso.getResult()) + "<br>");
 					sb.append("批注:" + StringUtils.getValue(workFlowHistoryJso.getComment()) + "");
 					Record record = createRecord(i + "", sb.toString());
 					// 原先生成html代码如下
