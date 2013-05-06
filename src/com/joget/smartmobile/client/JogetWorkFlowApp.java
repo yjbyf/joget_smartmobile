@@ -14,9 +14,9 @@ import com.joget.smartmobile.client.event.BrowseWorkListEventHandler;
 import com.joget.smartmobile.client.event.RefreshWorkListEvent;
 import com.joget.smartmobile.client.event.RefreshWorkListEventHandler;
 import com.joget.smartmobile.client.factory.ClientFactory;
-import com.joget.smartmobile.client.form.WorkListForm;
 import com.joget.smartmobile.client.jso.WorkItemJso;
 import com.joget.smartmobile.client.panel.WorkFlowHistoryPanel;
+import com.joget.smartmobile.client.panel.WorkFormPanel;
 import com.joget.smartmobile.client.panel.WorkListPanel;
 import com.joget.smartmobile.client.presenters.Presenter;
 import com.joget.smartmobile.client.presenters.WorkListPresenter;
@@ -65,13 +65,14 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 	}
 
 	private void browseWorkFlowDetail(Record record) {
-		WorkItemJso data = (WorkItemJso) record.getAttributeAsObject(Constants.RECORD); 
-		WorkListForm workListForm = new WorkListForm(data);
-		clientFactory.getNavstack().push(workListForm);
+		WorkItemJso data = (WorkItemJso) record.getAttributeAsObject(Constants.RECORD);
+		Presenter presenter = clientFactory.getWorkFormPresenter(data);
+		presenter.go();
 	}
 
 	private void browseWorkFlowHis(String processId) {
-		clientFactory.getNavstack().push(new WorkFlowHistoryPanel(processId));
+		Presenter presenter = clientFactory.getWorkFlowHistoryPresenter(processId);
+		presenter.go();
 	}
 
 	public JogetWorkFlowApp() {

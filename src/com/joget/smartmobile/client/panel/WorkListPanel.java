@@ -1,7 +1,6 @@
 package com.joget.smartmobile.client.panel;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.joget.smartmobile.client.activityIndicator.ProgressIndicator;
 import com.joget.smartmobile.client.event.BrowseDetailEvent;
 import com.joget.smartmobile.client.factory.ClientFactory;
@@ -32,7 +31,6 @@ import com.smartgwt.mobile.client.widgets.toolbar.ToolStripButton;
 public class WorkListPanel extends ScrollablePanel implements WorkListPresenter.Display{
 	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
 
-	private JsonpRequestBuilder rb = new JsonpRequestBuilder();
 	private ToolStripButton refreshBtn = new ToolStripButton("Refresh");
 	// private ToolStripButton listGridBtn = new ToolStripButton("testGrid");
 	private TableView tableView = new TableView();

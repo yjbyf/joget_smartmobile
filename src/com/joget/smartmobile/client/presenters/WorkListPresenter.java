@@ -2,6 +2,7 @@ package com.joget.smartmobile.client.presenters;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -21,12 +22,14 @@ import com.smartgwt.mobile.client.widgets.events.HasClickHandlers;
 
 public class WorkListPresenter implements Presenter {
 	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
-	// private ClientFactory clientFactory = GWT.create(ClientFactory.class);
 	private final Display display;
+	private HandlerRegistration handlerRegistration;
 
 	public interface Display {
 		HasClickHandlers getRefreshButton();
+
 		void setData(RecordList result);
+
 		Panel asPanel();
 	}
 
@@ -39,20 +42,22 @@ public class WorkListPresenter implements Presenter {
 	 */
 	@Override
 	public void bind() {
-		display.getRefreshButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(com.smartgwt.mobile.client.widgets.events.ClickEvent event) {
-				// SC.say("refreshing");
-				refreshDisplay();
-			}
-		});
+		if (handlerRegistration == null) {
+			handlerRegistration = display.getRefreshButton().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(com.smartgwt.mobile.client.widgets.events.ClickEvent event) {
+					// SC.say("refreshing");
+					refreshDisplay();
+				}
+			});
 
-		clientFactory.getEventBus().addHandler(RefreshWorkListEvent.TYPE, new RefreshWorkListEventHandler() {
-			@Override
-			public void onRefreshWorkList(RefreshWorkListEvent event) {
-				refreshDisplay();
-			}
-		});
+			clientFactory.getEventBus().addHandler(RefreshWorkListEvent.TYPE, new RefreshWorkListEventHandler() {
+				@Override
+				public void onRefreshWorkList(RefreshWorkListEvent event) {
+					refreshDisplay();
+				}
+			});
+		}
 	}
 
 	/**
@@ -100,8 +105,10 @@ public class WorkListPresenter implements Presenter {
 			Record record = new Record();
 			StringBuffer sb = new StringBuffer();
 			sb.append("From:" + StringUtils.getValue(data.getRequestor()) + "<br>");
-			sb.append("<font style='font-weight: normal;'>Process Name:" + StringUtils.getValue(data.getProcessName()) + "</font><br>");
-			sb.append("<font style='font-weight: normal;'>Activity Name:" + StringUtils.getValue(data.getActivityName()) + "</font>");
+			sb.append("<font style='font-weight: normal;'>Process Name:" + StringUtils.getValue(data.getProcessName())
+					+ "</font><br>");
+			sb.append("<font style='font-weight: normal;'>Activity Name:"
+					+ StringUtils.getValue(data.getActivityName()) + "</font>");
 			// record.setAttribute("title", "Process Name:" +
 			// data.getProcessName());
 			// record.setAttribute("info", "Activity Name:" +

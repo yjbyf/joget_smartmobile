@@ -26,6 +26,12 @@ import com.smartgwt.mobile.client.widgets.grid.ListGridField;
 public class FormItemsFactory {
 
 	private long id = 0;
+	
+	private String form_prefix;
+
+	public String getForm_prefix() {
+		return form_prefix;
+	}
 
 	// map控件与工作流变量之间的对应关系
 	private Map<String, Object> workflowVariableMap = new HashMap<String, Object>();
@@ -35,6 +41,7 @@ public class FormItemsFactory {
 	}
 
 	public Canvas[] getItems(String formId, List<JSONObject> jsonItem, Map<String, String> valuesMap) {
+		form_prefix = formId;
 		List<Canvas> items = new ArrayList<Canvas>();
 		for (JSONObject element : jsonItem) {
 			JSONValue className = element.get(Constants.ELEMENT_CLASSNAME);
