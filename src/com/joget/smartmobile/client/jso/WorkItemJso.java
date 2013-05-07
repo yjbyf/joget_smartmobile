@@ -37,6 +37,11 @@ public class WorkItemJso extends JavaScriptObject {
 		return this.requestor
 	}-*/;
 	
+	public final native String getApplicationType()
+	/*-{
+		return this.application_type
+	}-*/;
+	
 
 	
 }

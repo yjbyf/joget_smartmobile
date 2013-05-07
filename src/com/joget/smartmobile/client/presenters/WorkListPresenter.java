@@ -35,6 +35,7 @@ public class WorkListPresenter implements Presenter {
 
 	public WorkListPresenter(Display view) {
 		this.display = view;
+		bind();
 	}
 
 	/**
@@ -42,7 +43,8 @@ public class WorkListPresenter implements Presenter {
 	 */
 	@Override
 	public void bind() {
-		if (handlerRegistration == null) {
+		if (handlerRegistration == null) {// 防止重复注册,因为单实例
+			//刷新按钮事件注册
 			handlerRegistration = display.getRefreshButton().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(com.smartgwt.mobile.client.widgets.events.ClickEvent event) {
@@ -50,7 +52,7 @@ public class WorkListPresenter implements Presenter {
 					refreshDisplay();
 				}
 			});
-
+			//刷新列表事件注册
 			clientFactory.getEventBus().addHandler(RefreshWorkListEvent.TYPE, new RefreshWorkListEventHandler() {
 				@Override
 				public void onRefreshWorkList(RefreshWorkListEvent event) {
@@ -64,8 +66,7 @@ public class WorkListPresenter implements Presenter {
 	 * 加载页面
 	 */
 	@Override
-	public void go() {
-		bind();
+	public void go() {		
 		clientFactory.getNavstack().push(display.asPanel());
 		RootLayoutPanel.get().add(clientFactory.getNavstack());
 		refreshDisplay();
@@ -106,6 +107,8 @@ public class WorkListPresenter implements Presenter {
 			StringBuffer sb = new StringBuffer();
 			sb.append("From:" + StringUtils.getValue(data.getRequestor()) + "<br>");
 			sb.append("<font style='font-weight: normal;'>Process Name:" + StringUtils.getValue(data.getProcessName())
+					+ "</font><br>");
+			sb.append("<font style='font-weight: normal;'>Apply Type:" + StringUtils.getValue(data.getApplicationType())
 					+ "</font><br>");
 			sb.append("<font style='font-weight: normal;'>Activity Name:"
 					+ StringUtils.getValue(data.getActivityName()) + "</font>");

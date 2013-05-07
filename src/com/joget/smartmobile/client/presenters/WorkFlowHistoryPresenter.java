@@ -30,6 +30,7 @@ public class WorkFlowHistoryPresenter implements Presenter {
 
 	public WorkFlowHistoryPresenter(Display view) {
 		this.display = view;
+		bind();
 	}
 
 	/**
@@ -45,7 +46,6 @@ public class WorkFlowHistoryPresenter implements Presenter {
 	 */
 	@Override
 	public void go() {
-		bind();
 		clientFactory.getNavstack().push(display.asPanel());
 		//RootLayoutPanel.get().add(clientFactory.getNavstack());
 		initDisplay();

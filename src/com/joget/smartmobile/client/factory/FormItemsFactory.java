@@ -47,7 +47,7 @@ public class FormItemsFactory {
 			JSONValue className = element.get(Constants.ELEMENT_CLASSNAME);
 			FormItemJso formItemJso = (FormItemJso) element.getJavaScriptObject();
 			// 文本输入框
-			if (className != null && className.toString().equals(Constants.TEXT_FIELD_TYPE)) {
+			if (className != null && (className.toString().equals(Constants.TEXT_FIELD_TYPE)||className.toString().equals(Constants.ID_GENERATOR_FIELD))) {
 				items.add(generateTextItem(formItemJso, valuesMap));
 			}
 			// 下拉框
