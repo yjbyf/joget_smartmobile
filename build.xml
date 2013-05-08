@@ -46,8 +46,9 @@
         <path refid="project.class.path"/>
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
-      <jvmarg value="-Xmx256M"/>
+      <jvmarg value="-Xmx512M"/>
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+      <arg value="-compileReport"/>
       <arg value="com.joget.smartmobile.JogetWorkFlow"/>
     </java>
   </target>

@@ -1,9 +1,11 @@
 package com.joget.smartmobile.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.joget.smartmobile.client.event.AboutEvent;
 import com.joget.smartmobile.client.event.AboutEventHandler;
@@ -34,7 +36,16 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 		eventBus.addHandler(BrowseWorkListEvent.TYPE, new BrowseWorkListEventHandler() {
 			@Override
 			public void onBrowseWorkList(BrowseWorkListEvent event) {
-				browseWorkList();
+				GWT.runAsync(new RunAsyncCallback() {
+					public void onFailure(Throwable caught) {
+						Window.alert("Code download failed");
+					}
+
+					public void onSuccess() {
+						browseWorkList();
+					}
+				});
+
 			}
 
 		});
@@ -42,31 +53,58 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 		eventBus.addHandler(BrowseDetailEvent.TYPE, new BrowseDetailEventHandler() {
 			@Override
 			public void onBrowseDetail(BrowseDetailEvent event) {
-				browseWorkFlowDetail(event.getRecord());
+				final Record record = event.getRecord();
+				GWT.runAsync(new RunAsyncCallback() {
+					public void onFailure(Throwable caught) {
+						Window.alert("Code download failed");
+					}
+
+					public void onSuccess() {
+						browseWorkFlowDetail(record);
+					}
+				});
 			}
 		});
 
 		eventBus.addHandler(BrowseWorkFlowHisEvent.TYPE, new BrowseWorkFlowHisEventHandler() {
 			@Override
 			public void onBrowseWorkFlowHis(BrowseWorkFlowHisEvent event) {
-				browseWorkFlowHis(event.getProcessId());
+				final String processId = event.getProcessId();
+				GWT.runAsync(new RunAsyncCallback() {
+					public void onFailure(Throwable caught) {
+						Window.alert("Code download failed");
+					}
+
+					public void onSuccess() {
+						browseWorkFlowHis(processId);
+					}
+				});
+
 			}
 		});
-		
+
 		eventBus.addHandler(AboutEvent.TYPE, new AboutEventHandler() {
 			@Override
 			public void onAbout(AboutEvent event) {
-				about();
+				GWT.runAsync(new RunAsyncCallback() {
+					public void onFailure(Throwable caught) {
+						Window.alert("Code download failed");
+					}
+
+					public void onSuccess() {
+						about();
+					}
+				});
 			}
 		});
 
 	}
 
-	private void about(){
+	private void about() {
 		Presenter presenter = clientFactory.getAboutPresenter();
 		presenter.go();
 	}
-	
+
 	private void browseWorkList() {
 		Presenter presenter = clientFactory.getWorkListPresenter();
 		presenter.go();
