@@ -1,5 +1,6 @@
 {
  "JOGET_BASE_URL":"http://support.valuprosys.com:8000/jw/web/",
  "JOGET_SERVER_IDENTIFINATION":"?j_username=master&hash=CABB95C4E279DCCFB68EE56F567CB61F",
- "JOGET_ADMIN_NAME":"admin"
+ "JOGET_ADMIN_NAME":"admin",
+ "PROP_ABOUT_URL":"http://www.baidu.com"
 }

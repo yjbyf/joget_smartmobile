@@ -4,9 +4,11 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window.Location;
 import com.joget.smartmobile.client.jso.WorkItemJso;
+import com.joget.smartmobile.client.panel.AboutPanel;
 import com.joget.smartmobile.client.panel.WorkFlowHistoryPanel;
 import com.joget.smartmobile.client.panel.WorkFormPanel;
 import com.joget.smartmobile.client.panel.WorkListPanel;
+import com.joget.smartmobile.client.presenters.AboutPresenter;
 import com.joget.smartmobile.client.presenters.WorkFlowHistoryPresenter;
 import com.joget.smartmobile.client.presenters.WorkFormPresenter;
 import com.joget.smartmobile.client.presenters.WorkListPresenter;
@@ -21,10 +23,15 @@ public class ClientFactory {
 	private static WorkListPanel workListPanel;
 	private static WorkFlowHistoryPanel workFlowHistoryPanel;
 	private static WorkFormPanel workFormPanel;
+	private static AboutPanel aboutPanel;
+
+	
 
 	private static WorkListPresenter workListPresenter;
 	private static WorkFlowHistoryPresenter workFlowHistoryPresenter;
 	private static WorkFormPresenter workFormPresenter;
+	
+	private static AboutPresenter aboutPresenter;
 
 	public static NavStack getNavstack() {
 		if (navstack == null) {
@@ -32,6 +39,8 @@ public class ClientFactory {
 		}
 		return navstack;
 	}
+
+	
 
 	public static EventBus getEventBus() {
 		if (eventBus == null) {
@@ -46,7 +55,21 @@ public class ClientFactory {
 		}
 		return userId;
 	}
+	
+	public static AboutPanel getAboutPanel() {
+		if (aboutPanel == null) {
+			aboutPanel = new AboutPanel("about");
+		}
+		return aboutPanel;
+	}
 
+	public static AboutPresenter getAboutPresenter() {
+		if (aboutPresenter == null) {
+			aboutPresenter = new AboutPresenter(getAboutPanel());
+		}
+		return aboutPresenter;
+	}
+	
 	public static WorkListPanel getWorkListPanel() {
 		if (workListPanel == null) {
 			workListPanel = new WorkListPanel("WorkList");

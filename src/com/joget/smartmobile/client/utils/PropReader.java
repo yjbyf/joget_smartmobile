@@ -13,7 +13,16 @@ public class PropReader {
 	private String jogetBaseUrl = "";
 	private String jogetServerIdentifination = "";
 	private String adminName = "";
+	private String aboutUrl = "";
 	
+	public String getAboutUrl() {
+		return aboutUrl;
+	}
+
+	public void setAboutUrl(String aboutUrl) {
+		this.aboutUrl = aboutUrl;
+	}
+
 	public String getAdminName() {
 		return adminName;
 	}
@@ -59,6 +68,8 @@ public class PropReader {
 							.get(Constants.PROP_JOGET_SERVER_IDENTIFINATION) + ""));
 					instance.setAdminName(StringUtils.getRidOfQuotes(jsonObject
 							.get(Constants.PROP_AMDIN_NAME) + ""));
+					instance.setAboutUrl(StringUtils.getRidOfQuotes(jsonObject
+							.get(Constants.PROP_ABOUT_URL) + ""));
 					client.onSuccess(instance);
 					// SC.say(r.getText());
 
@@ -69,6 +80,10 @@ public class PropReader {
 			client.onUnavailable(e1);
 			//e1.printStackTrace();
 		}
+	}
+
+	public static PropReader getInstance() {
+		return instance;
 	}
 
 	

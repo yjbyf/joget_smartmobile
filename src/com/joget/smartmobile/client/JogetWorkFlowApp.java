@@ -5,21 +5,17 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.web.bindery.event.shared.EventBus;
+import com.joget.smartmobile.client.event.AboutEvent;
+import com.joget.smartmobile.client.event.AboutEventHandler;
 import com.joget.smartmobile.client.event.BrowseDetailEvent;
 import com.joget.smartmobile.client.event.BrowseDetailEventHandler;
 import com.joget.smartmobile.client.event.BrowseWorkFlowHisEvent;
 import com.joget.smartmobile.client.event.BrowseWorkFlowHisEventHandler;
 import com.joget.smartmobile.client.event.BrowseWorkListEvent;
 import com.joget.smartmobile.client.event.BrowseWorkListEventHandler;
-import com.joget.smartmobile.client.event.RefreshWorkListEvent;
-import com.joget.smartmobile.client.event.RefreshWorkListEventHandler;
 import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.jso.WorkItemJso;
-import com.joget.smartmobile.client.panel.WorkFlowHistoryPanel;
-import com.joget.smartmobile.client.panel.WorkFormPanel;
-import com.joget.smartmobile.client.panel.WorkListPanel;
 import com.joget.smartmobile.client.presenters.Presenter;
-import com.joget.smartmobile.client.presenters.WorkListPresenter;
 import com.joget.smartmobile.client.utils.Constants;
 import com.smartgwt.mobile.client.data.Record;
 
@@ -56,9 +52,21 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 				browseWorkFlowHis(event.getProcessId());
 			}
 		});
+		
+		eventBus.addHandler(AboutEvent.TYPE, new AboutEventHandler() {
+			@Override
+			public void onAbout(AboutEvent event) {
+				about();
+			}
+		});
 
 	}
 
+	private void about(){
+		Presenter presenter = clientFactory.getAboutPresenter();
+		presenter.go();
+	}
+	
 	private void browseWorkList() {
 		Presenter presenter = clientFactory.getWorkListPresenter();
 		presenter.go();

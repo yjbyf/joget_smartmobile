@@ -1,12 +1,12 @@
 package com.joget.smartmobile.client.panel;
 
 import com.joget.smartmobile.client.presenters.WorkFormPresenter;
+import com.joget.smartmobile.client.utils.Constants;
 import com.smartgwt.mobile.client.data.Record;
 import com.smartgwt.mobile.client.data.RecordList;
 import com.smartgwt.mobile.client.types.NavigationMode;
 import com.smartgwt.mobile.client.types.TableMode;
 import com.smartgwt.mobile.client.widgets.Button;
-import com.smartgwt.mobile.client.widgets.Canvas;
 import com.smartgwt.mobile.client.widgets.Panel;
 import com.smartgwt.mobile.client.widgets.ScrollablePanel;
 import com.smartgwt.mobile.client.widgets.events.HasClickHandlers;
@@ -73,10 +73,15 @@ public class WorkFormPanel extends ScrollablePanel implements WorkFormPresenter.
 		// tableView.setTableMode(TableMode.GROUPED);
 		RecordList recordList = new RecordList();
 		Record record = new Record();
-		record.setAttribute("_id", 1);
+		record.setAttribute(Constants.ID_PROPERTY, 1);
 		record.setAttribute("title", "审批历史记录");
 		// record.setAttribute("detailCount", 1);
 		recordList.add(record);
+		record = new Record();
+		record.setAttribute(Constants.ID_PROPERTY, 2);
+		record.setAttribute("title", "关于");
+		recordList.add(record);
+		
 		workFlowHisTableView.setData(recordList);
 		// actionButtonLayout.addMember(loadingButton);
 		vlayout.addMember(dynamicForm);
@@ -84,7 +89,7 @@ public class WorkFormPanel extends ScrollablePanel implements WorkFormPresenter.
 		vlayout.addMember(workFlowHisTableView);
 		// vlayout.addMember(new HRWidget());
 		vlayout.addMember(opBtn);
-
+		
 		addMember(vlayout);
 		// final WorkListPanel parentPanel = parent;
 	}

@@ -8,6 +8,8 @@ public class Constants {
 	public final static String YES = "Yes";
 
 	// tableview
+	public static final String ONE = "1";
+	public static final String TWO = "2";
 	public static final String ID_PROPERTY = "_id";
 	public static final String CONTENT_PROPERTY = "content";
 
@@ -23,6 +25,7 @@ public class Constants {
 	public static final String PROP_JOGET_BASE_URL = "JOGET_BASE_URL";
 	public static final String PROP_JOGET_SERVER_IDENTIFINATION = "JOGET_SERVER_IDENTIFINATION";
 	public static final String PROP_AMDIN_NAME = "JOGET_ADMIN_NAME";
+	public static final String PROP_ABOUT_URL = "PROP_ABOUT_URL";
 
 	public static String JOGET_WORKlIST_URL = JOGET_BASE_URL
 			+ "json/workflow/assignment/list/pending"
