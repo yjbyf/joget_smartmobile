@@ -19,6 +19,7 @@ import com.joget.smartmobile.client.jso.WorkItemJso;
 import com.joget.smartmobile.client.utils.Constants;
 import com.joget.smartmobile.client.utils.StringUtils;
 import com.smartgwt.mobile.client.data.Record;
+import com.smartgwt.mobile.client.data.RecordList;
 import com.smartgwt.mobile.client.util.SC;
 import com.smartgwt.mobile.client.widgets.Button;
 import com.smartgwt.mobile.client.widgets.Canvas;
@@ -56,6 +57,8 @@ public class WorkFormPresenter implements Presenter {
 		FormItem getActivityName();
 
 		HasDetailsSelectedHandlers getTableView();
+		
+		void setSubPanelRecord(RecordList recordList);
 
 		void redraw();
 
@@ -115,6 +118,7 @@ public class WorkFormPresenter implements Presenter {
 	 */
 	private void initDisplay() {
 		ProgressIndicator.show(display.asPanel());
+		display.setSubPanelRecord(null);
 		display.redraw();// 清除form里面的东西（可能是上次页面的遗留）因为单例模式
 		display.getProcessNameItem().setValue(workItemJso.getProcessName());
 		display.getActivityName().setValue(workItemJso.getActivityName());
@@ -132,6 +136,24 @@ public class WorkFormPresenter implements Presenter {
 						formItemJso.getValueMap());
 				// 展示控件
 				display.getDynamicForm().setFields(formItems);
+				
+				RecordList recordList = new RecordList();
+				Record record = new Record();
+				record.setAttribute(Constants.ID_PROPERTY, 1);
+				record.setAttribute("title", "审批历史记录");
+				// record.setAttribute("detailCount", 1);
+				recordList.add(record);
+
+				if(Constants.detailUrl.length()>0){
+					record = new Record();
+					record.setAttribute(Constants.ID_PROPERTY, 2);
+					record.setAttribute("title", "查看明细");
+					recordList.add(record);
+				}
+
+				display.setSubPanelRecord(recordList);
+				
+				
 				ProgressIndicator.hide(display.asPanel());
 			}
 

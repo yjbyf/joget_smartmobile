@@ -69,6 +69,9 @@ public class FormItemsFactory {
 				// items.add(new HRWidget());
 				items.add(generateTextAreaItem(formItemJso, valuesMap));
 			}
+			
+			//SubForm块定义着详情链接的url,url的值在json的data块转换后map中
+			//此定义每个页面都是唯一
 			if (className != null && className.toString().equals(Constants.SUB_FORM_TYPE)) {
 				//取得详情连接
 				Constants.detailUrl="";

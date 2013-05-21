@@ -117,6 +117,7 @@ public class FormItemsJso extends JavaScriptObject {
 				JSONValue xpathResultElement = xpathResultArray.get(i);
 				JSONObject elementJSONObject = xpathResultElement.isObject();
 				JSONValue className = elementJSONObject.get(Constants.ELEMENT_CLASSNAME);
+				//得到需要处理的元素json块
 				if (Constants.isProcessedType(className)) {
 					// System.err.println(elementJSONObject.toString());
 					// 判断section是否可见

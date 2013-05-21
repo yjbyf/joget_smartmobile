@@ -74,21 +74,7 @@ public class WorkFormPanel extends ScrollablePanel implements
 		// tableView.setNavigationMode(NavigationMode.WHOLE_RECORD);
 		// //tableView.setParentNavStack(this);
 		// tableView.setTableMode(TableMode.GROUPED);
-		//TODO 
-		//将RecordList生成移植到WorkFormPresenter中去，如果无查看明细url==“”则不用显示
-		RecordList recordList = new RecordList();
-		Record record = new Record();
-		record.setAttribute(Constants.ID_PROPERTY, 1);
-		record.setAttribute("title", "审批历史记录");
-		// record.setAttribute("detailCount", 1);
-		recordList.add(record);
-
-		record = new Record();
-		record.setAttribute(Constants.ID_PROPERTY, 2);
-		record.setAttribute("title", "查看明细");
-		recordList.add(record);
-
-		workFlowHisTableView.setData(recordList);
+		//workFlowHisTableView.setData(null);
 		// actionButtonLayout.addMember(loadingButton);
 		vlayout.addMember(dynamicForm);
 		// vlayout.addMember(new HRWidget());
@@ -133,6 +119,11 @@ public class WorkFormPanel extends ScrollablePanel implements
 	@Override
 	public void redraw() {
 		dynamicForm.setFields(null);
+	}
+
+	@Override
+	public void setSubPanelRecord(RecordList recordList) {
+		workFlowHisTableView.setData(recordList);
 	}
 
 }
