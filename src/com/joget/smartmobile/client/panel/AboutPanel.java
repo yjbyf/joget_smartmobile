@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Frame;
 import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.presenters.AboutPresenter;
+import com.joget.smartmobile.client.utils.Constants;
 import com.joget.smartmobile.client.utils.PropReader;
 import com.smartgwt.mobile.client.util.SC;
 import com.smartgwt.mobile.client.widgets.Panel;
@@ -34,7 +35,8 @@ public class AboutPanel extends ScrollablePanel implements AboutPresenter.Displa
 		this.setWidth("100%");
 		this.setHeight("100%");
 	
-		Frame frame = new Frame(PropReader.getInstance().getAboutUrl());
+		//Frame frame = new Frame(PropReader.getInstance().getAboutUrl());
+		Frame frame = new Frame(Constants.detailUrl);
 		frame.setWidth("100%");
 		frame.setHeight("100%");
 		this.addMember(frame);

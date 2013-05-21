@@ -24,14 +24,17 @@ import com.smartgwt.mobile.client.widgets.tableview.events.HasDetailsSelectedHan
  * @author user1
  * 
  */
-public class WorkFormPanel extends ScrollablePanel implements WorkFormPresenter.Display {
+public class WorkFormPanel extends ScrollablePanel implements
+		WorkFormPresenter.Display {
 	private DynamicForm dynamicForm = new DynamicForm();
-	private TextItem processNameItem = new TextItem("processName", "ProcessName");
-	private TextItem activityNameItem = new TextItem("activityName", "ActivityName");
+	private TextItem processNameItem = new TextItem("processName",
+			"ProcessName");
+	private TextItem activityNameItem = new TextItem("activityName",
+			"ActivityName");
 	private TextAreaItem noteItem;
 	private VLayout vlayout = new VLayout();
 
-	private TableView workFlowHisTableView= new TableView();
+	private TableView workFlowHisTableView = new TableView();
 	// private ActivityIndicator activityIndicator = new ActivityIndicator();
 
 	private Button opBtn = new Button("Complete");
@@ -57,7 +60,7 @@ public class WorkFormPanel extends ScrollablePanel implements WorkFormPresenter.
 		// toolbar.setAlign(Alignment.CENTER);
 
 		// 加载页面form的Items
-		
+
 		workFlowHisTableView.setTitleField("title");
 		workFlowHisTableView.setShowNavigation(true);
 		workFlowHisTableView.setNavigationMode(NavigationMode.NAVICON_ONLY);
@@ -71,17 +74,20 @@ public class WorkFormPanel extends ScrollablePanel implements WorkFormPresenter.
 		// tableView.setNavigationMode(NavigationMode.WHOLE_RECORD);
 		// //tableView.setParentNavStack(this);
 		// tableView.setTableMode(TableMode.GROUPED);
+		//TODO 
+		//将RecordList生成移植到WorkFormPresenter中去，如果无查看明细url==“”则不用显示
 		RecordList recordList = new RecordList();
 		Record record = new Record();
 		record.setAttribute(Constants.ID_PROPERTY, 1);
 		record.setAttribute("title", "审批历史记录");
 		// record.setAttribute("detailCount", 1);
 		recordList.add(record);
+
 		record = new Record();
 		record.setAttribute(Constants.ID_PROPERTY, 2);
-		record.setAttribute("title", "关于");
+		record.setAttribute("title", "查看明细");
 		recordList.add(record);
-		
+
 		workFlowHisTableView.setData(recordList);
 		// actionButtonLayout.addMember(loadingButton);
 		vlayout.addMember(dynamicForm);
@@ -89,7 +95,7 @@ public class WorkFormPanel extends ScrollablePanel implements WorkFormPresenter.
 		vlayout.addMember(workFlowHisTableView);
 		// vlayout.addMember(new HRWidget());
 		vlayout.addMember(opBtn);
-		
+
 		addMember(vlayout);
 		// final WorkListPanel parentPanel = parent;
 	}
@@ -126,7 +132,7 @@ public class WorkFormPanel extends ScrollablePanel implements WorkFormPresenter.
 
 	@Override
 	public void redraw() {
-		dynamicForm.setFields(null);		
+		dynamicForm.setFields(null);
 	}
 
 }

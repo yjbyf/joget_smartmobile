@@ -69,6 +69,11 @@ public class FormItemsFactory {
 				// items.add(new HRWidget());
 				items.add(generateTextAreaItem(formItemJso, valuesMap));
 			}
+			if (className != null && className.toString().equals(Constants.SUB_FORM_TYPE)) {
+				//取得详情连接
+				Constants.detailUrl="";
+				Constants.detailUrl =valuesMap.get(formItemJso.getId());;
+			}
 			//
 		}
 

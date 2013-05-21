@@ -58,7 +58,7 @@ public class ClientFactory {
 	
 	public static AboutPanel getAboutPanel() {
 		if (aboutPanel == null) {
-			aboutPanel = new AboutPanel("about");
+			aboutPanel = new AboutPanel("detail");
 		}
 		return aboutPanel;
 	}
