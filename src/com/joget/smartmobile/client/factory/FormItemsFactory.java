@@ -75,7 +75,7 @@ public class FormItemsFactory {
 			if (className != null && className.toString().equals(Constants.SUB_FORM_TYPE)) {
 				//取得详情连接
 				Constants.detailUrl="";
-				Constants.detailUrl =valuesMap.get(formItemJso.getId());;
+				Constants.detailUrl =StringUtils.getValue(valuesMap.get(formItemJso.getId()));
 			}
 			//
 		}
