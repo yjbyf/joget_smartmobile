@@ -1,9 +1,11 @@
 package com.joget.smartmobile.client.factory;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window.Location;
 import com.joget.smartmobile.client.jso.WorkItemJso;
+import com.joget.smartmobile.client.lang.LangConstants;
 import com.joget.smartmobile.client.panel.AboutPanel;
 import com.joget.smartmobile.client.panel.WorkFlowHistoryPanel;
 import com.joget.smartmobile.client.panel.WorkFormPanel;
@@ -25,14 +27,14 @@ public class ClientFactory {
 	private static WorkFormPanel workFormPanel;
 	private static AboutPanel aboutPanel;
 
-	
-
 	private static WorkListPresenter workListPresenter;
 	private static WorkFlowHistoryPresenter workFlowHistoryPresenter;
 	private static WorkFormPresenter workFormPresenter;
 	
 	private static AboutPresenter aboutPresenter;
 
+	private static LangConstants lanConstants = GWT.create(LangConstants.class);
+	
 	public static NavStack getNavstack() {
 		if (navstack == null) {
 			navstack = new NavStack();
@@ -72,7 +74,7 @@ public class ClientFactory {
 	
 	public static WorkListPanel getWorkListPanel() {
 		if (workListPanel == null) {
-			workListPanel = new WorkListPanel("WorkList");
+			workListPanel = new WorkListPanel(lanConstants.workList());
 		}
 		return workListPanel;
 	}
