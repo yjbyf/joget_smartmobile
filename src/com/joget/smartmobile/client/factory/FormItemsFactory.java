@@ -41,6 +41,7 @@ public class FormItemsFactory {
 	}
 
 	public Canvas[] getItems(String formId, List<JSONObject> jsonItem, Map<String, String> valuesMap) {
+		Constants.detailUrl="";
 		form_prefix = formId;
 		List<Canvas> items = new ArrayList<Canvas>();
 		for (JSONObject element : jsonItem) {
@@ -71,10 +72,9 @@ public class FormItemsFactory {
 			}
 			
 			//SubForm块定义着详情链接的url,url的值在json的data块转换后map中
-			//此定义每个页面都是唯一
+			//此定义每个页面都是唯一			
 			if (className != null && className.toString().equals(Constants.SUB_FORM_TYPE)) {
-				//取得详情连接
-				Constants.detailUrl="";
+				//取得详情连接				
 				Constants.detailUrl =StringUtils.getValue(valuesMap.get(formItemJso.getId()));
 			}
 			//
