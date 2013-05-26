@@ -7,9 +7,9 @@
 	<!-- 项目需要的语言种类，用逗号分开，也可分多个 -->
 	<!-- extend-property给出 -->
 	 
-	<extend-property name="locale" values="en,zh_CN" />
+	<extend-property name="locale" values="en,zh" />
 	<!-- 设置默认语言，不设置则为default -->
-	<set-property-fallback name="locale" value="zh_CN" />
+	<set-property-fallback name="locale" value="zh" />
 
 	<inherits name='com.google.gwt.json.JSON' />
 	<inherits name='com.google.gwt.jsonp.Jsonp' />
