@@ -33,7 +33,7 @@ public class ClientFactory {
 	
 	private static AboutPresenter aboutPresenter;
 
-	private static LangConstants lanConstants = GWT.create(LangConstants.class);
+	public static LangConstants lanConstants = GWT.create(LangConstants.class);
 	
 	public static NavStack getNavstack() {
 		if (navstack == null) {
@@ -60,7 +60,7 @@ public class ClientFactory {
 	
 	public static AboutPanel getAboutPanel() {
 		if (aboutPanel == null) {
-			aboutPanel = new AboutPanel("detail");
+			aboutPanel = new AboutPanel(lanConstants.detail());
 		}
 		return aboutPanel;
 	}

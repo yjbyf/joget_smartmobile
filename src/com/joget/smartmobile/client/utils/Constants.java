@@ -1,9 +1,10 @@
 package com.joget.smartmobile.client.utils;
 
 import com.google.gwt.json.client.JSONValue;
+import com.joget.smartmobile.client.factory.ClientFactory;
 
 public class Constants {
-
+	public static final String COLON = ":";
 	public final static String RECORD = "record";
 	public final static String YES = "Yes";
 
@@ -85,7 +86,7 @@ public class Constants {
 		// http://10.25.68.115:8090/jw/web/json/console/monitor/running/list?j_username=master&hash=CABB95C4E279DCCFB68EE56F567CB61F&processId=1617_stationeryApp_stationeryRequest&loginAs=clark
 	}
 
-	public final static String INPUT_HINT = "Plz input";
+	public final static String INPUT_HINT = ClientFactory.lanConstants.input();
 
 	// joget form定义相关常量
 	public static final String WORKFLOW_VARIABLE = "workflowVariable";

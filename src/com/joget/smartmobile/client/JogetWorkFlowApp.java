@@ -38,7 +38,7 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 			public void onBrowseWorkList(BrowseWorkListEvent event) {
 				GWT.runAsync(new RunAsyncCallback() {
 					public void onFailure(Throwable caught) {
-						Window.alert("Code download failed");
+						Window.alert(ClientFactory.lanConstants.codeDownloadFailed());
 					}
 
 					public void onSuccess() {
@@ -56,7 +56,7 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 				final Record record = event.getRecord();
 				GWT.runAsync(new RunAsyncCallback() {
 					public void onFailure(Throwable caught) {
-						Window.alert("Code download failed");
+						Window.alert(ClientFactory.lanConstants.codeDownloadFailed());
 					}
 
 					public void onSuccess() {
@@ -72,7 +72,7 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 				final String processId = event.getProcessId();
 				GWT.runAsync(new RunAsyncCallback() {
 					public void onFailure(Throwable caught) {
-						Window.alert("Code download failed");
+						Window.alert(ClientFactory.lanConstants.codeDownloadFailed());
 					}
 
 					public void onSuccess() {
@@ -88,7 +88,7 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 			public void onAbout(AboutEvent event) {
 				GWT.runAsync(new RunAsyncCallback() {
 					public void onFailure(Throwable caught) {
-						Window.alert("Code download failed");
+						Window.alert(ClientFactory.lanConstants.codeDownloadFailed());
 					}
 
 					public void onSuccess() {
@@ -127,7 +127,7 @@ public class JogetWorkFlowApp implements ValueChangeHandler<String> {
 
 	public void go() {
 		if ("".equals(History.getToken())) {
-			History.newItem("WorkList");
+			History.newItem(ClientFactory.lanConstants.workList());
 		} else {
 			History.fireCurrentHistoryState();
 		}

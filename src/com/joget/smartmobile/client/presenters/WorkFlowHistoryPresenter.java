@@ -15,6 +15,7 @@ import com.smartgwt.mobile.client.data.RecordList;
 import com.smartgwt.mobile.client.widgets.Panel;
 
 public class WorkFlowHistoryPresenter implements Presenter {
+	
 	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
 	private final Display display;
 	private String processId;
@@ -89,11 +90,11 @@ public class WorkFlowHistoryPresenter implements Presenter {
 		for (int i = 0; i < list.dataCount(); i++) {
 			WorkFlowHistoryJso workFlowHistoryJso = list.getEntry(i);
 			StringBuffer sb = new StringBuffer();
-			sb.append("节点:" + StringUtils.getValue(workFlowHistoryJso.getName()) + "<br>");
-			sb.append("审批人:" + StringUtils.getValue(workFlowHistoryJso.getAssignee()) + "<br>");
-			sb.append("审批时间:" + StringUtils.getValue(workFlowHistoryJso.getDateCompleted()) + "<br>");
-			sb.append("审批结果:" + StringUtils.getValue(workFlowHistoryJso.getResult()) + "<br>");
-			sb.append("批注:" + StringUtils.getValue(workFlowHistoryJso.getComment()) + "");
+			sb.append(ClientFactory.lanConstants.activity()+Constants.COLON + StringUtils.getValue(workFlowHistoryJso.getName()) + "<br>");
+			sb.append(ClientFactory.lanConstants.approver()+Constants.COLON + StringUtils.getValue(workFlowHistoryJso.getAssignee()) + "<br>");
+			sb.append(ClientFactory.lanConstants.approveDate()+Constants.COLON + StringUtils.getValue(workFlowHistoryJso.getDateCompleted()) + "<br>");
+			sb.append(ClientFactory.lanConstants.approveResult()+Constants.COLON + StringUtils.getValue(workFlowHistoryJso.getResult()) + "<br>");
+			sb.append(ClientFactory.lanConstants.annotation()+Constants.COLON + StringUtils.getValue(workFlowHistoryJso.getComment()) + "");
 			Record record = createRecord(i + "", sb.toString());
 			// 原先生成html代码如下
 			// <li class="sc-row GMWGMCLPB GMWGMCFRB GMWGMCOPB"

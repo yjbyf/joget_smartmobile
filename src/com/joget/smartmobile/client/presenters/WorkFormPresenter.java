@@ -140,14 +140,14 @@ public class WorkFormPresenter implements Presenter {
 				RecordList recordList = new RecordList();
 				Record record = new Record();
 				record.setAttribute(Constants.ID_PROPERTY, 1);
-				record.setAttribute("title", "审批历史记录");
+				record.setAttribute("title", ClientFactory.lanConstants.approveHistory());
 				// record.setAttribute("detailCount", 1);
 				recordList.add(record);
 
 				if(Constants.detailUrl.length()>0){
 					record = new Record();
 					record.setAttribute(Constants.ID_PROPERTY, 2);
-					record.setAttribute("title", "查看明细");
+					record.setAttribute("title", ClientFactory.lanConstants.detail());
 					recordList.add(record);
 				}
 
@@ -204,7 +204,7 @@ public class WorkFormPresenter implements Presenter {
 					}
 					// 必填校验
 					if (value.length() == 0) {
-						SC.say(formItem.getTitle() + "为空，请输入");
+						SC.say(formItem.getTitle() +ClientFactory.lanConstants.emptyInput());
 						return;
 					}
 
@@ -214,7 +214,7 @@ public class WorkFormPresenter implements Presenter {
 			}
 		}
 
-		Dialog dialog = new Dialog("Do you like continue?");
+		Dialog dialog = new Dialog(ClientFactory.lanConstants.askContinue());
 		dialog.setButtons(Dialog.YES, Dialog.NO);
 		dialog.addButtonClickHandler(new ButtonClickHandler() {
 			@Override

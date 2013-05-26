@@ -105,12 +105,12 @@ public class WorkListPresenter implements Presenter {
 			// SC.say(data.getProcessName());
 			Record record = new Record();
 			StringBuffer sb = new StringBuffer();
-			sb.append("From:" + StringUtils.getValue(data.getRequestor()) + "<br>");
-			sb.append("<font style='font-weight: normal;'>Process Name:" + StringUtils.getValue(data.getProcessName())
+			sb.append(ClientFactory.lanConstants.from()+Constants.COLON + StringUtils.getValue(data.getRequestor()) + "<br>");
+			sb.append("<font style='font-weight: normal;'>"+ClientFactory.lanConstants.processName()+Constants.COLON + StringUtils.getValue(data.getProcessName())
 					+ "</font><br>");
-			sb.append("<font style='font-weight: normal;'>Apply Type:" + StringUtils.getValue(data.getApplicationType())
+			sb.append("<font style='font-weight: normal;'>"+ClientFactory.lanConstants.applyType()+Constants.COLON + StringUtils.getValue(data.getApplicationType())
 					+ "</font><br>");
-			sb.append("<font style='font-weight: normal;'>Activity Name:"
+			sb.append("<font style='font-weight: normal;'>"+ClientFactory.lanConstants.activity()+Constants.COLON
 					+ StringUtils.getValue(data.getActivityName()) + "</font>");
 			// record.setAttribute("title", "Process Name:" +
 			// data.getProcessName());

@@ -1,5 +1,6 @@
 package com.joget.smartmobile.client.panel;
 
+import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.presenters.WorkFormPresenter;
 import com.joget.smartmobile.client.utils.Constants;
 import com.smartgwt.mobile.client.data.Record;
@@ -28,23 +29,23 @@ public class WorkFormPanel extends ScrollablePanel implements
 		WorkFormPresenter.Display {
 	private DynamicForm dynamicForm = new DynamicForm();
 	private TextItem processNameItem = new TextItem("processName",
-			"ProcessName");
+			ClientFactory.lanConstants.processName());
 	private TextItem activityNameItem = new TextItem("activityName",
-			"ActivityName");
+			ClientFactory.lanConstants.activity());
 	private TextAreaItem noteItem;
 	private VLayout vlayout = new VLayout();
 
 	private TableView workFlowHisTableView = new TableView();
 	// private ActivityIndicator activityIndicator = new ActivityIndicator();
 
-	private Button opBtn = new Button("Complete");
+	private Button opBtn = new Button(ClientFactory.lanConstants.complete());
 
 	public TextAreaItem getNoteItem() {
 		return noteItem;
 	}
 
 	public WorkFormPanel() {
-		super("WorkListDetail");
+		super(ClientFactory.lanConstants.workListDetail());
 
 		vlayout.setWidth("100%");
 		// final VLayout actionButtonLayout = new VLayout();

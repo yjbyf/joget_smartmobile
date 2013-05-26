@@ -31,7 +31,7 @@ import com.smartgwt.mobile.client.widgets.toolbar.ToolStripButton;
 public class WorkListPanel extends ScrollablePanel implements WorkListPresenter.Display {
 	private ClientFactory clientFactory = GWT.create(ClientFactory.class);
 
-	private ToolStripButton refreshBtn = new ToolStripButton("Refresh");
+	private ToolStripButton refreshBtn = new ToolStripButton(ClientFactory.lanConstants.refresh());
 	// private ToolStripButton listGridBtn = new ToolStripButton("testGrid");
 	private TableView tableView = new TableView();
 	private ToolStrip toolbar = new ToolStrip();

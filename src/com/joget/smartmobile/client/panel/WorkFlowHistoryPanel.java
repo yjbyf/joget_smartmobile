@@ -1,5 +1,6 @@
 package com.joget.smartmobile.client.panel;
 
+import com.joget.smartmobile.client.factory.ClientFactory;
 import com.joget.smartmobile.client.presenters.WorkFlowHistoryPresenter;
 import com.joget.smartmobile.client.utils.Constants;
 import com.smartgwt.mobile.client.data.Record;
@@ -11,10 +12,11 @@ import com.smartgwt.mobile.client.widgets.tableview.RecordFormatter;
 import com.smartgwt.mobile.client.widgets.tableview.TableView;
 
 public class WorkFlowHistoryPanel extends ScrollablePanel implements WorkFlowHistoryPresenter.Display{
+	
 	private TableView tableView = new TableView();
 
 	public WorkFlowHistoryPanel() {
-		super("WorkFlowHistory");
+		super(ClientFactory.lanConstants.workListDetail());
 		setWidth("100%");
 		// tableView.setTitleField("title");
 		// tableView.setShowNavigation(false);
